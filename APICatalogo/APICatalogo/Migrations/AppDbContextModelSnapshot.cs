@@ -37,7 +37,7 @@ namespace APICatalogo.Migrations
 
                     b.HasKey("CategoriaId");
 
-                    b.ToTable("Categorias");
+                    b.ToTable("Categorias", (string)null);
                 });
 
             modelBuilder.Entity("APICatalogo.Models.Produto", b =>
@@ -77,7 +77,7 @@ namespace APICatalogo.Migrations
 
                     b.HasIndex("CategoriaId");
 
-                    b.ToTable("Produtos");
+                    b.ToTable("Produtos", (string)null);
                 });
 
             modelBuilder.Entity("APICatalogo.Models.Produto", b =>

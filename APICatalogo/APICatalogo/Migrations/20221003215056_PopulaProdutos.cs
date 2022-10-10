@@ -12,10 +12,10 @@ namespace APICatalogo.Migrations
                 "Values('Guaraná Antartica', 'Refrigerante de Guaraná 600 ml', '6.99', 'guarana.png', 40, now(), 1)");
 
             mb.Sql("Insert into Produtos (Nome, Descricao, Preco, ImagemUrl, Estoque, DataCadastro, CategoriaId)" +
-                "Values('Guaraná Antartica', 'X Salada', '16.99', 'xsalada.png', 30, now(), 2)");
+                "Values('X Salada', 'X salada com salada caseira', '16.99', 'xsalada.png', 30, now(), 2)");
 
             mb.Sql("Insert into Produtos (Nome, Descricao, Preco, ImagemUrl, Estoque, DataCadastro, CategoriaId)" +
-                "Values('Guaraná Antartica', 'Pizza de Calabresa', '49.99', 'pizza-calabresa.png', 30, now(), 3)");
+                "Values('Pizza de Calabresa', 'Pizza de Calabresa com molho e mussarela', '49.99', 'pizza-calabresa.png', 30, now(), 3)");
         }
 
         protected override void Down(MigrationBuilder mb)
