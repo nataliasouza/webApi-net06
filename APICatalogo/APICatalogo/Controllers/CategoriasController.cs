@@ -17,12 +17,12 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet("categoriaComProduto")]
-        public ActionResult<IEnumerable<Categoria>> GetCategoriasComProdutos()
+        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoriasComProdutos()
         {
             try
             {
                 //return _context.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
-                return _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <= 5).ToList();
+                return await _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <= 5).ToListAsync();
             }
             catch (Exception)
             {
@@ -33,11 +33,11 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Categoria>> GetCategorias()
+        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategorias()
         {
             try
             {
-                var categorias = _context.Categorias.AsNoTracking().ToList();
+                var categorias = await _context.Categorias.AsNoTracking().ToListAsync();
                 if (categorias is null)
                 {
                     return NotFound("As categorias não foram encontradas");
@@ -93,7 +93,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int:min(1)}")]
         public ActionResult AtualizaCategoria(int id, Categoria categoria)
         {
             try
