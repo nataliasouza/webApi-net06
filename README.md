@@ -1,5 +1,8 @@
-# webApi-net06
-Web API ASP .NET Core Essencial (.NET 6)
+# Web API ASP .NET Core Essencial (.NET 6) - Macoratti
+
+Recursos da ASP .NET Core WEB API utilizados : Roteamento, padrões de rotas, tipos de retorno, Model Binding, Data Annotations, Validação, Configuração, Filtros, Tratamento de erros, Logging.
+
+Outros conceitos: paginação, programação assíncrona, aplicar a segurança, usar a documentação com Swagger e realizar testes em uma API ASP .NET Core Web API.
 
 Criação Web API no VS 2022
 
@@ -16,3 +19,6 @@ Criação Web API no VS 2022
 11.	Aplicar o Migrations e criar o banco de dados e as tabelas.
 12.	Criar os controladores : ProdutosController e CategoriaController.
 13.	Definir os endpoints ou métodos Actions para realizar as operações CRUD.
+
+#
+![image](https://user-images.githubusercontent.com/13735095/196065701-7853bd95-5639-4f21-911f-1e377339e376.png)
