@@ -1,7 +1,6 @@
-﻿using APICatalogo.Data;
-using APICatalogo.Models;
+﻿using APICatalogo.Models;
+using APICatalogo.Repository.interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace APICatalogo.Controllers
 {
@@ -9,19 +8,25 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _uof;
 
-        public ProdutosController(AppDbContext context)
+        public ProdutosController(IUnitOfWork context)
         {
-            _context = context;
+            _uof = context;
+        }
+
+        [HttpGet("menorpreco")]
+        public ActionResult<IEnumerable<Produto>> GetProdutosPrecos()
+        {
+            return _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Produto>>> GetProdutos()
+        public ActionResult<IEnumerable<Produto>> GetProdutos()
         {
             try
             {
-                var produtos = await _context.Produtos.AsNoTracking().ToListAsync();
+                var produtos = _uof.ProdutoRepository.GetAll().ToList();
                 if (produtos is null)
                 {
                     return NotFound("Produtos não encontrados");
@@ -37,11 +42,11 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet("{id:int:min(1)}", Name ="ObterProduto")]
-        public async Task<ActionResult<Produto>> GetProduto(int id)
+        public ActionResult<Produto> GetProduto(int id)
         {
             try
             {
-                var produto = await _context.Produtos.FirstOrDefaultAsync(p => p.ProdutoId == id);
+                var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
                 if (produto is null)
                 {
                     return NotFound("Produto não encontrado");
@@ -66,8 +71,8 @@ namespace APICatalogo.Controllers
                     return BadRequest();
                 }                    
 
-                _context.Produtos.Add(produto);
-                _context.SaveChanges();
+                _uof.ProdutoRepository.Add(produto);
+                _uof.Commit();
 
                 return new CreatedAtRouteResult("ObterProduto",
                     new { id = produto.ProdutoId }, produto);
@@ -89,8 +94,8 @@ namespace APICatalogo.Controllers
                     return BadRequest();
                 }
 
-                _context.Entry(produto).State = EntityState.Modified;
-                _context.SaveChanges();
+                _uof.ProdutoRepository.Update(produto);
+                _uof.Commit();
 
                 return Ok(produto);
             }
@@ -106,15 +111,15 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                var produto = _context.Produtos.FirstOrDefault(p => p.ProdutoId == id);
+                var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
 
                 if (produto is null)
                 {
                     return NotFound("Produto não localizado...");
                 }
 
-                _context.Produtos.Remove(produto);
-                _context.SaveChanges();
+                _uof.ProdutoRepository.Delete(produto);
+                _uof.Commit();
 
                 return Ok(produto);
             }

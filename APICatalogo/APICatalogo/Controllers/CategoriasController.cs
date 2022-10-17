@@ -1,5 +1,6 @@
 ﻿using APICatalogo.Data;
 using APICatalogo.Models;
+using APICatalogo.Repository.interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,20 +10,20 @@ namespace APICatalogo.Controllers
     [ApiController]
     public class CategoriasController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IUnitOfWork _uof;
 
-        public CategoriasController(AppDbContext context)
+        public CategoriasController(IUnitOfWork context)
         {
-            _context = context;
+            _uof = context;
         }
 
         [HttpGet("categoriaComProduto")]
-        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategoriasComProdutos()
+        public ActionResult<IEnumerable<Categoria>> GetCategoriasComProdutos()
         {
             try
             {
-                //return _context.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
-                return await _context.Categorias.Include(p => p.Produtos).Where(c => c.CategoriaId <= 5).ToListAsync();
+                //return _uof.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
+                return _uof.CategoriaRepository.GetProdutosPorCategoria().ToList();
             }
             catch (Exception)
             {
@@ -32,12 +33,12 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Categoria>>> GetCategorias()
+        [HttpGet("categorias")]
+        public ActionResult<IEnumerable<Categoria>> GetCategoria()
         {
             try
             {
-                var categorias = await _context.Categorias.AsNoTracking().ToListAsync();
+                var categorias = _uof.CategoriaRepository.GetAll().ToList();
                 if (categorias is null)
                 {
                     return NotFound("As categorias não foram encontradas");
@@ -51,12 +52,12 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpGet("{id:int}", Name = "ObterCategoria")]
+        [HttpGet("{id:int:min(1)}", Name = "ObterCategoria")]
         public ActionResult<Categoria> GetCategoria(int id)
         {
             try
             {
-                var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
+                var categoria = _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
                 if (categoria is null)
                 {
                     return NotFound("Categoria não encontrada");
@@ -80,8 +81,8 @@ namespace APICatalogo.Controllers
                     return BadRequest();
                 }
 
-                _context.Categorias.Add(categoria);
-                _context.SaveChanges();
+                _uof.CategoriaRepository.Add(categoria);
+                _uof.Commit();
 
                 return new CreatedAtRouteResult("ObterCategoria",
                     new { id = categoria.CategoriaId }, categoria);
@@ -103,8 +104,8 @@ namespace APICatalogo.Controllers
                     return BadRequest();
                 }
 
-                _context.Entry(categoria).State = EntityState.Modified;
-                _context.SaveChanges();
+                _uof.CategoriaRepository.Update(categoria); 
+                _uof.Commit();
 
                 return Ok(categoria);
             }
@@ -120,15 +121,15 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                var categoria = _context.Categorias.FirstOrDefault(c => c.CategoriaId == id);
+                var categoria = _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
 
                 if (categoria is null)
                 {
                     return NotFound("Categoria não localizado...");
                 }
 
-                _context.Categorias.Remove(categoria);
-                _context.SaveChanges();
+                _uof.CategoriaRepository.Delete(categoria);
+                _uof.Commit();
 
                 return Ok(categoria);
             }
