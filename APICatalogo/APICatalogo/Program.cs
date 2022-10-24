@@ -1,6 +1,8 @@
 using APICatalogo.Data;
+using APICatalogo.DTOs.Mappings;
 using APICatalogo.Repository;
 using APICatalogo.Repository.interfaces;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -17,6 +19,14 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
