@@ -22,10 +22,18 @@ namespace APICatalogo.Controllers
         [HttpGet("menorpreco")]
         public ActionResult<IEnumerable<ProdutoDTO>> GetProdutosPrecos()
         {
-            var produtos = _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
-            var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);
+            try
+            {
+                var produtos = _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
+                var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);
 
-            return produtosDTO;
+                return produtosDTO;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ocorreu um erro ao tratar a sua solicitação.");
+            }
         }
 
         [HttpGet]
