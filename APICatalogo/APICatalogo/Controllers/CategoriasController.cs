@@ -28,7 +28,7 @@ namespace APICatalogo.Controllers
             {
                 //return _uof.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
                 var categorias = _uof.CategoriaRepository.GetProdutosPorCategoria().ToList();
-                var categoriasDTO = _mapper.Map<List<Categoria>>(categorias);
+                var categoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
 
                 return categoriasDTO;
             }
