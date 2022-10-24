@@ -33,7 +33,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpGet("categorias")]
+        [HttpGet]
         public ActionResult<IEnumerable<Categoria>> GetCategoria()
         {
             try
