@@ -1,11 +1,9 @@
-﻿using APICatalogo.Data;
-using APICatalogo.DTOs;
+﻿using APICatalogo.DTOs;
 using APICatalogo.Models;
 using APICatalogo.Pagination;
 using APICatalogo.Repository.interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers
@@ -36,9 +34,8 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao buscar as categorias com produtos.");
             }
         }
 
@@ -72,7 +69,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao buscar as categorias.");
             }
         }
 
@@ -94,7 +91,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao buscar a categoria pelo seu identificador.");
             }
         }
 
@@ -121,7 +118,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao salvar a categoria.");
             }
         }
 
@@ -140,12 +137,12 @@ namespace APICatalogo.Controllers
                 _uof.CategoriaRepository.Update(categoria); 
                 _uof.Commit();
 
-                return Ok(categoria);
+                return Ok($"Nome do produto atualizado: {categoria.Nome}");
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao atualizar a categoria.");
             }
         }
 
@@ -166,7 +163,7 @@ namespace APICatalogo.Controllers
 
                 var categoriaDto = _mapper.Map<CategoriaDTO>(categoria);
 
-                return Ok(categoriaDto);
+                return Ok($"A categoria deletada: {categoriaDto.Nome}");
             }
             catch (Exception)
             {

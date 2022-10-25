@@ -34,7 +34,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao buscar a lista de produto ordenada com o menor preço.");
             }
         }
 
@@ -69,7 +69,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                    "Ocorreu um erro ao buscar os produtos.");
             }
         }
 
@@ -91,7 +91,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                    "Ocorreu um erro ao tratar a sua solicitação.");
+                                    "Ocorreu um erro ao buscar o produto pelo seu identificador.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace APICatalogo.Controllers
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                    "Ocorreu um erro ao tratar a sua solicitação.");
+                                    "Ocorreu um erro ao salvar o produto.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace APICatalogo.Controllers
                 _uof.ProdutoRepository.Update(produto);
                 _uof.Commit();
 
-                return Ok(produto);
+                return Ok($"Nome do produto atualizado: {produto.Nome}");
             }
             catch (Exception)
             {
@@ -163,12 +163,12 @@ namespace APICatalogo.Controllers
 
                 var produtoDto = _mapper.Map<ProdutoDTO>(produto);
 
-                return Ok(produtoDto);
+                return Ok($"Nome do produto deletado: {produtoDto.Nome}");
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                    "Ocorreu um erro ao tratar a sua solicitação.");
+                                    "Ocorreu um erro ao deletar um produto.");
             }
         }
     }
