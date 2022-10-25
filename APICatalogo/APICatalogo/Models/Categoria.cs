@@ -11,15 +11,10 @@ namespace APICatalogo.Models;
         {
             Produtos = new Collection<Produto>();
         }
+
         [Key]
         public int CategoriaId { get; set; }
-        
-        [Required]
-        [MaxLength(80)]
         public string? Nome { get; set; }
-        
-        [Required]
-        [MaxLength(80)]
         public string? ImagemUrl { get; set; }
 
         public ICollection<Produto>? Produtos { get; set; }
