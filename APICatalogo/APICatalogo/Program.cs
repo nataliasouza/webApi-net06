@@ -1,5 +1,6 @@
 using APICatalogo.Data;
 using APICatalogo.DTOs.Mappings;
+using APICatalogo.Extensions;
 using APICatalogo.Repository;
 using APICatalogo.Repository.interfaces;
 using AutoMapper;
@@ -42,6 +43,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureExceptionHandler();
 
 app.UseHttpsRedirection();
 

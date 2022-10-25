@@ -34,8 +34,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao buscar as categorias com produtos.");
+                throw new Exception("Ocorreu um erro ao buscar as categorias com produtos.");
             }
         }
 
@@ -68,8 +67,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao buscar as categorias.");
+                throw new Exception("Ocorreu um erro ao buscar as categorias.");
             }
         }
 
@@ -90,8 +88,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao buscar a categoria pelo seu identificador.");
+                throw new Exception("Ocorreu um erro ao buscar a categoria pelo seu identificador.");
             }
         }
 
@@ -117,8 +114,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao salvar a categoria.");
+                throw new Exception("Ocorreu um erro ao salvar a categoria.");
             }
         }
 
@@ -141,8 +137,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao atualizar a categoria.");
+                throw new Exception("Ocorreu um erro ao atualizar a categoria.");
             }
         }
 
@@ -167,8 +162,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                    "Ocorreu um erro ao tratar a sua solicitação.");
+                throw new Exception("Ocorreu um erro ao tratar a sua solicitação.");
             }
         }
     }
