@@ -14,11 +14,14 @@ namespace APICatalogo.Controllers
     {
         private readonly IUnitOfWork _uof;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public ProdutosController(IUnitOfWork context, IMapper mapper)
+        public ProdutosController(IUnitOfWork context, IMapper mapper,
+            ILogger<CategoriasController> logger)
         {
             _uof = context;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet("menorpreco")]
@@ -26,6 +29,8 @@ namespace APICatalogo.Controllers
         {
             try
             {
+                _logger.LogInformation("\n======== Get => produtos/menorpreco ========\n");
+
                 var produtos = _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
                 var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);
 
@@ -33,6 +38,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
+                _logger.LogInformation("\n======== Get => produtos/menorpreco - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao buscar a lista de produto ordenada com o menor preço.");
             }
         }
@@ -42,6 +48,8 @@ namespace APICatalogo.Controllers
         {
             try
             {
+                _logger.LogInformation("\n======== Get => produtos/ ========\n");
+
                 var produtos = _uof.ProdutoRepository.GetProdutos(produtosParameters);
 
                 var metadata = new
@@ -60,6 +68,7 @@ namespace APICatalogo.Controllers
 
                 if (produtos is null)
                 {
+                    _logger.LogInformation("\n======== Get => produtos/menorpreco - IS NULL ========\n");
                     return NotFound("Produtos não encontrados");
                 }
 
@@ -67,6 +76,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
+                _logger.LogInformation("\n======== Get => produtos/menorpreco - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao buscar os produtos.");
             }
         }
@@ -76,10 +86,14 @@ namespace APICatalogo.Controllers
         {
             try
             {
+                string messagem = $"\n======== Get => produtos/id = {id} ========\n";
+                _logger.LogInformation(messagem);
+
                 var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
                 
                 if (produto is null)
                 {
+                    _logger.LogInformation($"\n======== Get => produtos/id = {id} - IS NULL ========\n");
                     return NotFound("Produto não encontrado");
                 }
 
@@ -88,6 +102,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
+                _logger.LogInformation($"\n======== Get => produtos/id = {id} - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao buscar o produto pelo seu identificador.");
             }
         }
@@ -99,8 +114,11 @@ namespace APICatalogo.Controllers
             {
                 if (produtoDto is null)
                 {
+                    _logger.LogInformation("\n======== Post => produtos ======== - IS NULL\n");
                     return BadRequest();
                 }
+
+                _logger.LogInformation("\n======== Post => produtos ======== \n");
 
                 var produto = _mapper.Map<Produto>(produtoDto);
 
@@ -114,6 +132,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
+                _logger.LogInformation("\n======== Post => produtos ======== - EXCEPTION\n");
                 throw new Exception("Ocorreu um erro ao salvar o produto.");
             }
         }
@@ -125,8 +144,11 @@ namespace APICatalogo.Controllers
             {
                 if (id != produtoDto.ProdutoId)
                 {
+                    _logger.LogInformation($"\n======== Put => produtos/id = {id} ======== - BAD REQUEST\n");
                     return BadRequest();
                 }
+
+                _logger.LogInformation($"\n======== Put => produtos/id = {id} ======== \n");
 
                 var produto = _mapper.Map<Produto>(produtoDto) ;
 
@@ -137,6 +159,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
+                _logger.LogInformation($"\n======== Put => produtos/id = {id} ======== - EXCEPTION\n");
                 throw new Exception("Ocorreu um erro ao tratar a sua solicitação.");
             }
         }
@@ -146,10 +169,13 @@ namespace APICatalogo.Controllers
         {
             try
             {
+                _logger.LogInformation($"\n======== Delete => produtos/id {id} ========\n");
+
                 var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
 
                 if (produto is null)
                 {
+                    _logger.LogInformation($"\n======== Delete => produtos/id = {id} ======== - IS NULL\n");
                     return NotFound("Produto não localizado...");
                 }
 
@@ -162,6 +188,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
+                _logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - EXCEPTION\n");
                 throw new Exception("Ocorreu um erro ao deletar um produto.");
             }
         }
