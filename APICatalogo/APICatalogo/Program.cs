@@ -1,6 +1,7 @@
 using APICatalogo.Data;
 using APICatalogo.DTOs.Mappings;
 using APICatalogo.Extensions;
+using APICatalogo.Logging;
 using APICatalogo.Repository;
 using APICatalogo.Repository.interfaces;
 using AutoMapper;
@@ -35,6 +36,11 @@ builder.Services.AddDbContext<AppDbContext> (options =>
     options.UseMySql(mySqlConnection,
         ServerVersion.AutoDetect(mySqlConnection)));
 
+builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
+{
+    LogLevel = LogLevel.Information
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//adiciona o middleware de tratamento de erros
 app.ConfigureExceptionHandler();
 
 app.UseHttpsRedirection();
