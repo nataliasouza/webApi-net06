@@ -1,4 +1,5 @@
 ﻿using APICatalogo.DTOs;
+using APICatalogo.Filters;
 using APICatalogo.Models;
 using APICatalogo.Pagination;
 using APICatalogo.Repository.interfaces;
@@ -25,13 +26,13 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet("menorpreco")]
-        public ActionResult<IEnumerable<ProdutoDTO>> GetProdutosPrecos()
+        public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetProdutosPrecos()
         {
             try
             {
                 _logger.LogInformation("\n======== Get => produtos/menorpreco ========\n");
 
-                var produtos = _uof.ProdutoRepository.GetProdutosPorPreco().ToList();
+                var produtos = await _uof.ProdutoRepository.GetProdutosPorPreco();
                 var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);
 
                 return produtosDTO;
@@ -44,13 +45,14 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProdutoDTO>> GetTodosProdutos([FromQuery] ProdutosParameters produtosParameters)
+        [ServiceFilter(typeof(LoggingFilter))]
+        public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetTodosProdutos([FromQuery] ProdutosParameters produtosParameters)
         {
             try
             {
-                _logger.LogInformation("\n======== Get => produtos/ ========\n");
+                _logger.LogInformation("\n======== Get => produtos/ ========\n");                
 
-                var produtos = _uof.ProdutoRepository.GetProdutos(produtosParameters);
+                var produtos = await _uof.ProdutoRepository.GetProdutos(produtosParameters);
 
                 var metadata = new
                 {
@@ -81,15 +83,17 @@ namespace APICatalogo.Controllers
             }
         }
 
+        [ServiceFilter(typeof(LoggingFilter))]
         [HttpGet("{id:int:min(1)}", Name ="ObterProduto")]
-        public ActionResult<ProdutoDTO> GetProduto(int id)
+        public async Task<ActionResult<ProdutoDTO>> GetProduto(int id)
         {
             try
             {
-                string messagem = $"\n======== Get => produtos/id = {id} ========\n";
+                string messagem = $"\n======== Get => produtos/id = {id} ========\n";                
                 _logger.LogInformation(messagem);
+                
 
-                var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
+                var produto = await _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
                 
                 if (produto is null)
                 {
@@ -108,7 +112,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddProduto(ProdutoDTO produtoDto)
+        public async Task<ActionResult> AddProduto(ProdutoDTO produtoDto)
         {
             try
             {
@@ -123,7 +127,7 @@ namespace APICatalogo.Controllers
                 var produto = _mapper.Map<Produto>(produtoDto);
 
                 _uof.ProdutoRepository.Add(produto);
-                _uof.Commit();
+                await _uof.Commit();
 
                 var produtoDTO = _mapper.Map<ProdutoDTO>(produto);
 
@@ -138,7 +142,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult AtualizaProduto(int id, ProdutoDTO produtoDto)
+        public async Task<ActionResult> AtualizaProduto(int id, ProdutoDTO produtoDto)
         {
             try
             {
@@ -153,7 +157,7 @@ namespace APICatalogo.Controllers
                 var produto = _mapper.Map<Produto>(produtoDto) ;
 
                 _uof.ProdutoRepository.Update(produto);
-                _uof.Commit();
+                await _uof.Commit();
 
                 return Ok($"Nome do produto atualizado: {produto.Nome}");
             }
@@ -165,13 +169,13 @@ namespace APICatalogo.Controllers
         }
 
         [HttpDelete ("{id:int}")]
-        public ActionResult<ProdutoDTO> DeletaProduto(int id)
+        public async Task<ActionResult<ProdutoDTO>> DeletaProduto(int id)
         {
             try
             {
                 _logger.LogInformation($"\n======== Delete => produtos/id {id} ========\n");
 
-                var produto = _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
+                var produto = await _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
 
                 if (produto is null)
                 {
@@ -180,7 +184,7 @@ namespace APICatalogo.Controllers
                 }
 
                 _uof.ProdutoRepository.Delete(produto);
-                _uof.Commit();
+                await _uof.Commit();
 
                 var produtoDto = _mapper.Map<ProdutoDTO>(produto);
 
