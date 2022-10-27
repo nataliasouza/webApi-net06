@@ -24,9 +24,9 @@ namespace APICatalogo.Repository
             get { return _categoriaRepository = _categoriaRepository ?? new CategoriaRepository(_context); }
         }
 
-        public void Commit()
+        public async Task Commit()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         public void Dispose()
