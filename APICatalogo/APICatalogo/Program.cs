@@ -1,6 +1,7 @@
 using APICatalogo.Data;
 using APICatalogo.DTOs.Mappings;
 using APICatalogo.Extensions;
+using APICatalogo.Filters;
 using APICatalogo.Logging;
 using APICatalogo.Repository;
 using APICatalogo.Repository.interfaces;
@@ -35,6 +36,8 @@ var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnecti
 builder.Services.AddDbContext<AppDbContext> (options =>
     options.UseMySql(mySqlConnection,
         ServerVersion.AutoDetect(mySqlConnection)));
+
+builder.Services.AddScoped<LoggingFilter>();
 
 builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderConfiguration
 {
