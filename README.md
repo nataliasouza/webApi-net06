@@ -26,10 +26,16 @@
 18. Paginação - Get/categorias e Get/produtos.
 19. Criação dos Filters - LogginsFilter.
 20. Tratamentos de Erros.
-20. Criação e Customização doss Loggings.
+20. Criação e Customização dos Loggings.
 21. Registro dos Loggings em .txt
 22. Programação Assíncrona - Repositório, Paginação e Controladores.
-23. Segurança - Autenticação e Autorização - Identity/JWT  
+23. Segurança - Autenticação e Autorização - Identity/JWT.
+24. Registro, Login e Token - AutorizaController.
+25. Configuração do Swagger para utilizar o token JWT.
   
 #
-![image](https://user-images.githubusercontent.com/13735095/198408131-7460a243-7bb8-475d-b872-78803c212f21.png)
+![image](https://user-images.githubusercontent.com/13735095/198689420-c1c94945-7361-446d-b4ed-781dbdf32b9f.png)
+![image](https://user-images.githubusercontent.com/13735095/198689829-219296f1-4901-41b2-afea-6c28f98b2c2d.png)
+![image](https://user-images.githubusercontent.com/13735095/198689881-a0a75cc0-393c-4167-bf9b-d5ff1d35cf99.png)
+
+
