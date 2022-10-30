@@ -4,6 +4,7 @@ using APICatalogo.Pagination;
 using APICatalogo.Repository.interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -12,6 +13,7 @@ namespace APICatalogo.Controllers
     [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("[controller]")]
     [ApiController]
+    
     public class CategoriasController : ControllerBase
     {
         private readonly IUnitOfWork _uof;

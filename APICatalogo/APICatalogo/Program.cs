@@ -55,7 +55,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var mappingConfig = new MapperConfiguration(mc =>
@@ -65,6 +64,17 @@ var mappingConfig = new MapperConfiguration(mc =>
 
 IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
+
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("PermitirApiRequest",
+//        builder =>
+//        builder.WithOrigins("https://www.apirequest.io/")
+//        .WithMethods("GET", "POST")
+//    );
+//});
+
+builder.Services.AddCors();
 
 var mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -117,6 +127,12 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+//app.UseCors(opt => opt
+//    .WithOrigins("https://apirequest.io/"));
+// .WithMethods("GET"));
+
+app.UseCors(opt => opt.AllowAnyOrigin());
 
 app.MapControllers();
 

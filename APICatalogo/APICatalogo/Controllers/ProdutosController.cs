@@ -5,6 +5,7 @@ using APICatalogo.Pagination;
 using APICatalogo.Repository.interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -13,6 +14,7 @@ namespace APICatalogo.Controllers
     [Authorize(AuthenticationSchemes = "Bearer")]
     [Route("[controller]")]
     [ApiController]
+    
     public class ProdutosController : ControllerBase
     {
         private readonly IUnitOfWork _uof;
@@ -27,7 +29,7 @@ namespace APICatalogo.Controllers
             _logger = logger;
         }
 
-        [HttpGet("menorpreco")]
+        [HttpGet("menorpreco")]        
         public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetProdutosPrecos()
         {
             try
@@ -47,7 +49,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet]
-        [ServiceFilter(typeof(LoggingFilter))]
+        [ServiceFilter(typeof(LoggingFilter))]       
         public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetTodosProdutos([FromQuery] ProdutosParameters produtosParameters)
         {
             try
@@ -86,7 +88,7 @@ namespace APICatalogo.Controllers
         }
 
         [ServiceFilter(typeof(LoggingFilter))]
-        [HttpGet("{id:int:min(1)}", Name ="ObterProduto")]
+        [HttpGet("{id:int:min(1)}", Name ="ObterProduto")]       
         public async Task<ActionResult<ProdutoDTO>> GetProduto(int id)
         {
             try
