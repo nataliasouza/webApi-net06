@@ -1,10 +1,12 @@
 # Web API ASP .NET Core Essencial (.NET 6) - Macoratti - => Em Desenvolvimento <=
 
-### Recursos da ASP .NET Core WEB API utilizados : Roteamento, Padrões de rotas, Tipos de retorno, Model Binding, Data Annotations, Validação, Configuração, Filtros, Tratamento de Erros, Logging.
+### Recursos da ASP .NET Core WEB API utilizados : Roteamento, Padrões de rotas, Tipos de retorno, Model Binding, Data Annotations, Configuração, Filtros, Tratamento de Erros, Logging.
 
-#### Outros conceitos: Paginação, Programação Assíncrona, Segurança (Identity - JWT), Documentação com Swagger e Testes Unitários.
+> Outros conceitos: Paginação, Programação Assíncrona, Segurança (Identity - JWT), Documentação com Swagger e Testes Unitários.
 
 ### *Criação Web API no VS 2022*
+
+### *Version = "v1"*
 
 1.	Criar projeto no VS 2022 Community – ApiCatalogo.
 2.	Criar o projeto com opção para habilitar a Open API e usar Controllers.
@@ -32,8 +34,19 @@
 23. Segurança - Autenticação e Autorização - Identity/JWT.
 24. Registro, Login e Token - AutorizaController.
 25. Configuração do Swagger para utilizar o token JWT.
-  
+26. Implementação CORS.  
+
+### *Version = "v2"*
+##### Branch = apiCatalagoV2
+
+*O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:*
+
+- [x] Criar o Versionamento da API.
+- [ ] Incluir os Teste Unitários.
+- [ ] Consumir uma API.
+
 #
+### Documentação - Version = "v1"
 ![image](https://user-images.githubusercontent.com/13735095/198689420-c1c94945-7361-446d-b4ed-781dbdf32b9f.png)
 ![image](https://user-images.githubusercontent.com/13735095/198689829-219296f1-4901-41b2-afea-6c28f98b2c2d.png)
 ![image](https://user-images.githubusercontent.com/13735095/198689881-a0a75cc0-393c-4167-bf9b-d5ff1d35cf99.png)
