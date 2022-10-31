@@ -5,15 +5,13 @@ using APICatalogo.Pagination;
 using APICatalogo.Repository.interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "Bearer")]
-    [ApiVersion("1.0")]
-    //[Route("[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [ApiVersion("1.0")]    
     [Route("v{v:apiVersion}/[controller]")]
     [ApiController]
     
@@ -31,7 +29,8 @@ namespace APICatalogo.Controllers
             _logger = logger;
         }
 
-        [HttpGet("menorpreco")]        
+        [HttpGet("menorpreco"), MapToApiVersion("1.0")]
+        [ServiceFilter(typeof(LoggingFilter))]
         public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetProdutosPrecos()
         {
             try
@@ -50,7 +49,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, MapToApiVersion("1.0")]
         [ServiceFilter(typeof(LoggingFilter))]       
         public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetTodosProdutos([FromQuery] ProdutosParameters produtosParameters)
         {
@@ -90,7 +89,7 @@ namespace APICatalogo.Controllers
         }
 
         [ServiceFilter(typeof(LoggingFilter))]
-        [HttpGet("{id:int:min(1)}", Name ="ObterProduto")]       
+        [HttpGet("{id:int:min(1)}", Name ="ObterProduto"), MapToApiVersion("1.0")]       
         public async Task<ActionResult<ProdutoDTO>> GetProduto(int id)
         {
             try
@@ -117,8 +116,8 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [ServiceFilter(typeof(LoggingFilter))]
-        [HttpPost]
+        [ServiceFilter(typeof(LoggingFilter)), MapToApiVersion("1.0")]
+        [HttpPost, MapToApiVersion("1.0")]
         public async Task<ActionResult> AddProduto(ProdutoDTO produtoDto)
         {
             try
@@ -149,7 +148,7 @@ namespace APICatalogo.Controllers
         }
 
         [ServiceFilter(typeof(LoggingFilter))]
-        [HttpPut("{id:int}")]
+        [HttpPut("{id:int}"), MapToApiVersion("1.0")]
         public async Task<ActionResult> AtualizaProduto(int id, ProdutoDTO produtoDto)
         {
             try
@@ -177,7 +176,7 @@ namespace APICatalogo.Controllers
         }
 
         [ServiceFilter(typeof(LoggingFilter))]
-        [HttpDelete ("{id:int}")]
+        [HttpDelete ("{id:int}"), MapToApiVersion("1.0")]
         public async Task<ActionResult<ProdutoDTO>> DeletaProduto(int id)
         {
             try
