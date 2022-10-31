@@ -28,5 +28,12 @@ namespace APICatalogo.Repository
         {
             return await GetAll().OrderBy(c => c.Preco).ToListAsync();
         }
+
+        public async Task<PagedList<Produto>>GetOrdenaPorNome(ProdutosParameters produtosParameters)
+        {
+            return await PagedList<Produto>.ToPagedList(GetAll().OrderBy(on => on.Nome),
+                 produtosParameters.PageNumber, produtosParameters.PageSize);                
+                
+        }
     }
 }

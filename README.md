@@ -37,7 +37,7 @@
 26. Implementação CORS.  
 
 ### *Version = "v2"*
-##### Branch = apiCatalagoV2
+##### Branch = apiCatalogoV2
 
 *O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:*
 
@@ -47,8 +47,11 @@
 
 #
 ### Documentação - Version = "v1"
-![image](https://user-images.githubusercontent.com/13735095/198689420-c1c94945-7361-446d-b4ed-781dbdf32b9f.png)
-![image](https://user-images.githubusercontent.com/13735095/198689829-219296f1-4901-41b2-afea-6c28f98b2c2d.png)
-![image](https://user-images.githubusercontent.com/13735095/198689881-a0a75cc0-393c-4167-bf9b-d5ff1d35cf99.png)
+![image](https://user-images.githubusercontent.com/13735095/199120458-a3f81294-0be6-4680-9c80-827e3d5a4296.png)
+![image](https://user-images.githubusercontent.com/13735095/199120534-76a3d776-3cce-4a8e-a1e1-4e0433171572.png)
+#
+### Documentação - Version = "v2"
+![image](https://user-images.githubusercontent.com/13735095/199120719-b0637f04-459c-4b19-88ff-eb241e3d4353.png)
+
 
 

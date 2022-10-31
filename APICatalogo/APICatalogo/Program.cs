@@ -1,3 +1,4 @@
+using APICatalogo;
 using APICatalogo.Data;
 using APICatalogo.DTOs.Mappings;
 using APICatalogo.Extensions;
@@ -8,9 +9,13 @@ using APICatalogo.Repository.interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -27,7 +32,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "APICatalogo", Version = "v1" });
+   // c.SwaggerDoc("v1", new OpenApiInfo { Title = "APICatalogo", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name ="Authorization",
@@ -53,6 +58,27 @@ builder.Services.AddSwaggerGen(c =>
           new string[] {}
        }
     });
+});
+
+builder.Services.AddApiVersioning(p =>
+{
+    p.DefaultApiVersion = new ApiVersion(1, 0);
+    p.ReportApiVersions = true;
+    p.AssumeDefaultVersionWhenUnspecified = true;
+});
+
+builder.Services.AddVersionedApiExplorer(p =>
+{
+    p.GroupNameFormat = "'v'VVV";
+    p.SubstituteApiVersionInUrl = true;
+});
+
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    // add a custom operation filter which sets default values
+    options.OperationFilter<SwaggerDefaultValues>();
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -109,12 +135,12 @@ builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderCon
 }));
 
 var app = builder.Build();
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 //adiciona o middleware de tratamento de erros
@@ -128,12 +154,21 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-//app.UseCors(opt => opt
-//    .WithOrigins("https://apirequest.io/"));
-// .WithMethods("GET"));
+app.UseSwagger();
 
-app.UseCors(opt => opt.AllowAnyOrigin());
+app.UseSwaggerUI(options =>
+{
+    foreach (var description in provider.ApiVersionDescriptions)
+    {
+        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+            description.GroupName.ToUpperInvariant());
+    }
+});
 
+app.UseCors(opt => opt.AllowAnyMethod()
+                      .AllowAnyOrigin()
+                      .AllowAnyHeader());
+                        
 app.MapControllers();
 
 app.Run();
