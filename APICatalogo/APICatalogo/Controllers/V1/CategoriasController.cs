@@ -9,10 +9,9 @@ using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers
 {
-    //[Authorize(AuthenticationSchemes = "Bearer")]
-    [ApiVersion("1.0")]
-    //[Route("[controller]")]
-    [Route("v{v:apiVersion}/categorias")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [ApiVersion("1.0")]    
+    [Route("v{v:apiVersion}/[controller]")]
     [ApiController]
     
     public class CategoriasController : ControllerBase
@@ -29,7 +28,7 @@ namespace APICatalogo.Controllers
             _logger = logger;
         }
         
-        [HttpGet("categoriaComProduto")]
+        [HttpGet("categoriaComProduto"), MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetCategoriasComProdutos()
         {
             try
@@ -50,7 +49,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet, MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetTodasCategoria([FromQuery] CategoriasParameters categoriasParameters)
         {
             try
@@ -86,7 +85,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpGet("{id:int:min(1)}", Name = "ObterCategoria")]
+        [HttpGet("{id:int:min(1)}", Name = "ObterCategoria"), MapToApiVersion("1.0")]
         public async Task<ActionResult<CategoriaDTO>> GetCategoria(int id)
         {
             try
@@ -112,7 +111,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, MapToApiVersion("1.0")]
         public async Task<ActionResult> AddCategoria(CategoriaDTO categoriaDto)
         {
             try
@@ -142,7 +141,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpPut("{id:int:min(1)}")]
+        [HttpPut("{id:int:min(1)}"), MapToApiVersion("1.0")]
         public async Task<ActionResult> AtualizaCategoria(int id, CategoriaDTO categoriaDto)
         {
             try
@@ -169,7 +168,7 @@ namespace APICatalogo.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}"), MapToApiVersion("1.0")]
         public async Task<ActionResult<CategoriaDTO>> DeletaCategoria(int id)
         {
             try
