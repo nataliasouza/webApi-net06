@@ -1,9 +1,15 @@
-# Web API ASP .NET Core Essencial (.NET 6) - Macoratti - => Em Desenvolvimento <=
+# Web API ASP .NET Core Essencial (.NET 6) - Macoratti 
+<img src="https://img.shields.io/static/v1?label=MACORATTI&message=UDEMY&color=7159c1&style=for-the-badge"/>
+:spiral_calendar: Atualizado em 31 de Outubro de 2022
 
 ### Recursos da ASP .NET Core WEB API utilizados : Roteamento, Padrões de rotas, Tipos de retorno, Model Binding, Data Annotations, Configuração, Filtros, Tratamento de Erros, Logging.
 
 > Outros conceitos: Paginação, Programação Assíncrona, Segurança (Identity - JWT), Documentação com Swagger e Testes Unitários.
-
+ 
+```bash
+https://www.udemy.com/course/curso-web-api-asp-net-core-essencial/
+```
+#
 ### *Criação Web API no VS 2022*
 
 ### *Version = "v1"*
@@ -42,6 +48,7 @@
 *O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas nas seguintes tarefas:*
 
 - [x] Criar o Versionamento da API.
+  - [x] Utilizar o Versionamento no Swagger.
 - [ ] Incluir os Teste Unitários.
 - [ ] Consumir uma API.
 
