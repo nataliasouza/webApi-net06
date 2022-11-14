@@ -18,7 +18,7 @@ namespace APICatalogo.Controllers.V2
         private readonly ILogger _logger;
 
         public ProdutosVDoisController(IUnitOfWork context, IMapper mapper,
-            ILogger<CategoriasController> logger)
+            ILogger<ProdutosController> logger)
         {
             _uof = context;
             _mapper = mapper;
