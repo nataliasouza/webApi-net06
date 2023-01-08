@@ -76,10 +76,17 @@ https://blog.christian-schou.dk/how-to-use-api-versioning-in-net-core-web-api/
 ##### Branch = testesUnitarios
 
 - [x] Incluir os Teste Unitários - Xunit. :construction:[Em construção]:construction:
+- [x] Incluir um "Logger Real". [Em construção]:construction:
+- [ ] Utilizar MOQ - Refatorar CategoriasControllerTestesUnitarios.
+- [ ] Utilizar MOQ - Criar Testes Unitários de ProdutosControllerTestesUnitarios.
 
 ##### Branch = consumindoAPI
 
 - [ ] Consumir uma API.
+
+##### Branch = comentariosExplicativos
+
+- [ ] Incluir comentários explicando trechos do código. 
 
 #
 ### Documentação - Version = "v1"
