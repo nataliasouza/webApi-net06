@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [ApiVersion("1.0")]    
     [Route("v{v:apiVersion}/[controller]")]
     [ApiController]
@@ -18,22 +18,28 @@ namespace APICatalogo.Controllers
     {
         private readonly IUnitOfWork _uof;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
 
-        public CategoriasController(IUnitOfWork context, IMapper mapper,
-            ILogger<CategoriasController> logger)
+        //public CategoriasController(IUnitOfWork context, IMapper mapper,
+        //    ILogger<CategoriasController> logger)
+        //{
+        //    _uof = context;
+        //    _mapper = mapper;
+        //    _logger = logger;
+        //}
+
+        public CategoriasController(IUnitOfWork context, IMapper mapper)
         {
             _uof = context;
-            _mapper = mapper;
-            _logger = logger;
+            _mapper = mapper;            
         }
-        
+
         [HttpGet("categoriaComProduto"), MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetCategoriasComProdutos()
         {
             try
             {
-                _logger.LogInformation("\n======== Get => categorias/categoriaComProduto ========\n");
+                //_logger.LogInformation("\n======== Get => categorias/categoriaComProduto ========\n");
 
                 //return _uof.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
                 var categorias = await _uof.CategoriaRepository.GetProdutosPorCategoria();
@@ -44,7 +50,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                _logger.LogInformation("\n======== Get => categorias/categoriaComProduto - EXCEPTION ========\n");
+                //_logger.LogInformation("\n======== Get => categorias/categoriaComProduto - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao buscar as categorias com produtos.");
             }
         }
@@ -54,7 +60,7 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                _logger.LogInformation("\n======== Get => categorias ========\n");
+                //_logger.LogInformation("\n======== Get => categorias ========\n");
 
                 var categorias = await _uof.CategoriaRepository.GetCategorias(categoriasParameters);
 
@@ -80,7 +86,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                _logger.LogInformation("\n======== Get => categorias - EXCEPTION ========\n");
+                //_logger.LogInformation("\n======== Get => categorias - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao buscar as categorias.");
             }
         }
@@ -90,14 +96,14 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                string messagem = $"\n======== Get => categorias/id = {id} ========\n";
-                _logger.LogInformation(messagem);
+                //string messagem = $"\n======== Get => categorias/id = {id} ========\n";
+                //_logger.LogInformation(messagem);
 
                 var categoria = await _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
                 
                 if (categoria is null)
                 {
-                    _logger.LogInformation($"\n======== Get => categorias/id = {id} - IS NULL ========\n");
+                    //_logger.LogInformation($"\n======== Get => categorias/id = {id} - IS NULL ========\n");
                     return NotFound("Categoria não encontrada");                    
                 }
 
@@ -106,7 +112,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                _logger.LogInformation($"\n======== Get => categorias/id = {id} - EXCEPTION ========\n");
+                //_logger.LogInformation($"\n======== Get => categorias/id = {id} - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao buscar a categoria pelo seu identificador.");
             }
         }
@@ -118,11 +124,11 @@ namespace APICatalogo.Controllers
             {
                 if (categoriaDto is null)
                 {
-                    _logger.LogInformation("\n======== Post => categorias ======== - IS NULL\n");
+                    //_logger.LogInformation("\n======== Post => categorias ======== - IS NULL\n");
                     return BadRequest();
                 }
 
-                _logger.LogInformation("\n======== Post => categorias ========\n");              
+                //_logger.LogInformation("\n======== Post => categorias ========\n");              
 
                 var categoria = _mapper.Map<Categoria>(categoriaDto);
 
@@ -136,7 +142,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                _logger.LogInformation("\n======== Post => categorias - EXCEPTION ========\n");
+                //_logger.LogInformation("\n======== Post => categorias - EXCEPTION ========\n");
                 throw new Exception("Ocorreu um erro ao salvar a categoria.");
             }
         }
@@ -148,11 +154,11 @@ namespace APICatalogo.Controllers
             {
                 if (id != categoriaDto.CategoriaId)
                 {
-                    _logger.LogInformation($"\n======== Put => categorias/id = {id} ======== - BAD REQUEST\n");
+                    //_logger.LogInformation($"\n======== Put => categorias/id = {id} ======== - BAD REQUEST\n");
                     return BadRequest();
                 }
 
-                _logger.LogInformation("\n======== Put => categorias ========\n");
+                //_logger.LogInformation("\n======== Put => categorias ========\n");
 
                 var categoria = _mapper.Map<Categoria>(categoriaDto);
 
@@ -163,7 +169,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                _logger.LogInformation("\n======== Put => categorias ======== - EXCEPTION\n");
+                //_logger.LogInformation("\n======== Put => categorias ======== - EXCEPTION\n");
                 throw new Exception("Ocorreu um erro ao atualizar a categoria.");
             }
         }
@@ -173,13 +179,13 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                _logger.LogInformation($"\n======== Delete => categorias/id = {id} ========\n");
+                //_logger.LogInformation($"\n======== Delete => categorias/id = {id} ========\n");
 
                 var categoria = await _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
 
                 if (categoria is null)
                 {
-                    _logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - IS NULL\n");
+                    //_logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - IS NULL\n");
                     return NotFound("Categoria não localizado...");
                 }
 
@@ -192,7 +198,7 @@ namespace APICatalogo.Controllers
             }
             catch (Exception)
             {
-                _logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - EXCEPTION\n");
+                //_logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - EXCEPTION\n");
                 throw new Exception("Ocorreu um erro ao tratar a sua solicitação.");
             }
         }
