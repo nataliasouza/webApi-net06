@@ -1,6 +1,6 @@
 # Web API ASP .NET Core Essencial (.NET 6) - Macoratti 
 <img src="https://img.shields.io/static/v1?label=MACORATTI&message=UDEMY&color=7159c1&style=for-the-badge"/>
-:spiral_calendar: Atualizado em 27 de Novembro de 2022
+:spiral_calendar: Atualizado em 09 de Janeiro de 2023
 
 :construction: O projeto está em desenvolvimento :construction:
 
@@ -71,22 +71,61 @@ https://blog.christian-schou.dk/how-to-use-api-versioning-in-net-core-web-api/
 </details>
 <br>
 
+### *Version = "comentarios"*
+##### Branch = comentariosExplicativos
+
+<details>
+  <summary> <b> Detalhamento das atividades </b> <i>(clique na setinha!)</i> </summary><br>
+
+1.	Incluir comentários explicando trechos do código. 
+2. Incluir no README detalhamento de como executar a aplicação.
+3. Incluir no README quais ferramentas foram necessárias.
+
+</details>
+<br>
+
+### *Version = "testesUnitarios"*
+##### Branch = testesUnitarios
+
+<details>
+  <summary> <b> Detalhamento das atividades </b> <i>(clique na setinha!)</i> </summary><br>
+
+1.	Incluir um "Logger Real". [concluído]
+2. Incluir os Teste Unitários.
+3. Utilizar MOQ.
+
+:warning: *No curso não foi demonstrado como utilizar um "logger real" nos Testes Unitários* :warning:
+
+<b>Links utilizados: </b> 
+```bash
+https://learn.microsoft.com/pt-br/aspnet/core/fundamentals/logging/?view=aspnetcore-6.0
+```
+```bash
+https://stackoverflow.com/questions/43424095/how-to-unit-test-with-ilogger-in-asp-net-core
+```
+</details>
+<br>
+
+
+
 ### *Próximas atualizações serão voltadas nas seguintes tarefas:* 
+
+##### Branch = comentariosExplicativos
+
+- [x] Incluir comentários explicando trechos do código. :construction:[Em construção]:construction:
+- [ ] Incluir no README detalhamento de como executar a aplicação.
+- [ ] Incluir no README quais ferramentas foram necessárias.
 
 ##### Branch = testesUnitarios
 
-- [x] Incluir os Teste Unitários - Xunit. :construction:[Em construção]:construction:
-- [x] Incluir um "Logger Real". [Em construção]:construction:
+- [x] Incluir os Testes Unitários - XUnit. :construction:[Em construção]:construction:
+- [ ] Utilizar MOQ - Bancos de Dados.
 - [ ] Utilizar MOQ - Refatorar CategoriasControllerTestesUnitarios.
 - [ ] Utilizar MOQ - Criar Testes Unitários de ProdutosControllerTestesUnitarios.
 
 ##### Branch = consumindoAPI
 
 - [ ] Consumir uma API.
-
-##### Branch = comentariosExplicativos
-
-- [ ] Incluir comentários explicando trechos do código. 
 
 #
 ### Documentação - Version = "v1"
