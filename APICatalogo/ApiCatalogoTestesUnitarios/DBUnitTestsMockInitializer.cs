@@ -1,10 +1,5 @@
 ﻿using APICatalogo.Data;
 using APICatalogo.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApiCatalogoTestesUnitarios
 {

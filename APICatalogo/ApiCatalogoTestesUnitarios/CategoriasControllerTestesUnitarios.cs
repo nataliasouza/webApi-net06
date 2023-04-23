@@ -22,7 +22,7 @@ namespace ApiCatalogoTestesUnitarios
 
         public static DbContextOptions<AppDbContext> dbContextOptions { get; }
 
-        public static string connectionString = "Server=localhost;DataBase=APICatalogoDB;Uid=root; Pwd=231293@Nso";       
+        public static string connectionString = "Server=localhost;DataBase=APICatalogoDB;Uid=root; Pwd=UmaSenh@";       
 
         static CategoriasControllerTestesUnitarios()
         {
