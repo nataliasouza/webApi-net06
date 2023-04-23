@@ -5,6 +5,15 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICatalogo", "APICatalogo\APICatalogo.csproj", "{1E0B961E-8A98-44F8-9081-E5B11D9233A1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{16C0B4C8-9942-4545-9A72-0D7989428D60}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{59B558F4-377C-4065-B99C-91B82118486F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.OpenTelemetry.WebApi.Core", "Sample.OpenTelemetry.WebApi.Core\Sample.OpenTelemetry.WebApi.Core.csproj", "{A5418F5E-B4EC-4B2F-9D8B-1C0291A7F86D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +24,17 @@ Global
 		{1E0B961E-8A98-44F8-9081-E5B11D9233A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E0B961E-8A98-44F8-9081-E5B11D9233A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E0B961E-8A98-44F8-9081-E5B11D9233A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5418F5E-B4EC-4B2F-9D8B-1C0291A7F86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5418F5E-B4EC-4B2F-9D8B-1C0291A7F86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5418F5E-B4EC-4B2F-9D8B-1C0291A7F86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5418F5E-B4EC-4B2F-9D8B-1C0291A7F86D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1E0B961E-8A98-44F8-9081-E5B11D9233A1} = {59B558F4-377C-4065-B99C-91B82118486F}
+		{A5418F5E-B4EC-4B2F-9D8B-1C0291A7F86D} = {59B558F4-377C-4065-B99C-91B82118486F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {901BDD69-D415-4E32-95B0-4B8D2DD4B06E}
