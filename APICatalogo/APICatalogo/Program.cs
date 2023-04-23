@@ -18,10 +18,22 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
 using System.Text.Json.Serialization;
+using Sample.OpenTelemetry.WebApi.Core.Configurations;
+using Sample.OpenTelemetry.WebApi.Core.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var appSettings = new AppSetting();
+builder.Configuration.Bind(appSettings);
+
+builder.AddOpenTelemetry(appSettings);
+
+builder.Services.AddApiConfiguration();
+
+builder.Services.AddMassTransitExtension(builder.Configuration);
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => 
@@ -32,7 +44,8 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-   // c.SwaggerDoc("v1", new OpenApiInfo { Title = "APICatalogo", Version = "v1" });
+    //c.SwaggerDoc("v1", new OpenApiInfo { Title = "APICatalogo", Version = "v1" });
+        
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name ="Authorization",
@@ -141,7 +154,9 @@ var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>()
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
 }
+
 
 //adiciona o middleware de tratamento de erros
 app.ConfigureExceptionHandler();
