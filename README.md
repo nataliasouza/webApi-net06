@@ -188,5 +188,11 @@ https://github.com/hgmauri/sample-opentelemetry
   ![tracing2](https://user-images.githubusercontent.com/13735095/233818062-bee79b21-0dff-42b9-a515-16949ef7a8ac.png)
   
   ![image](https://user-images.githubusercontent.com/13735095/233818070-a6b3f13c-a7a9-4902-b84b-b6a305242260.png)
+  
+  ![image](https://user-images.githubusercontent.com/13735095/233841879-2198f84e-4a65-413c-8626-4f39fdc381f2.png)
+  
+  ![image](https://user-images.githubusercontent.com/13735095/233841918-bd22194b-ff8a-4b3b-bd9b-2b0fc1fa9461.png)
+
+
 </details>
 
