@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [ApiVersion("1.0")]    
     [Route("v{v:apiVersion}/[controller]")]
     [ApiController]
