@@ -1,6 +1,6 @@
 # Web API ASP .NET Core Essencial (.NET 6) - Macoratti 
 <img src="https://img.shields.io/static/v1?label=MACORATTI&message=UDEMY&color=7159c1&style=for-the-badge"/>
-:spiral_calendar: Atualizado em 09 de Janeiro de 2023
+:spiral_calendar: Atualizado em 24 de Abril de 2023
 
 :construction: O projeto está em desenvolvimento :construction:
 
@@ -106,7 +106,32 @@ https://stackoverflow.com/questions/43424095/how-to-unit-test-with-ilogger-in-as
 </details>
 <br>
 
+### *Version = "jaeger-tracing"*
+##### Branch = jaeger-tracing
 
+<details>
+  <summary> <b> Detalhamento das atividades </b> <i>(clique na setinha!)</i> </summary><br>
+
+1.	Incluir classes para utilizar o tracing. [concluído]
+2. Visualização do Tracing no jaeger. [concluído]
+
+:warning: *No curso não foi demonstrado como utilizar Jaeger* :warning:
+
+<b>Links utilizados: </b> 
+
+Observabilidade em APIs ASP.NET Core com Jaeger - com Henrique Mauri
+```bash
+https://www.youtube.com/watch?v=pKbhVASHolQ
+```
+```bash
+https://henriquemauri.net/jaeger-e-opentelemetry-no-net-6-0/
+```
+```bash
+https://github.com/hgmauri/sample-opentelemetry
+```
+
+</details>
+<br>
 
 ### *Próximas atualizações serão voltadas nas seguintes tarefas:* 
 
@@ -150,5 +175,18 @@ https://stackoverflow.com/questions/43424095/how-to-unit-test-with-ilogger-in-as
   <summary> <b> Imagem ProdutosVDoisController </b> <i>(clique na setinha!)</i> </summary><br>
   
 ![image](https://user-images.githubusercontent.com/13735095/199120719-b0637f04-459c-4b19-88ff-eb241e3d4353.png)
+</details>
+
+#
+### Documentação - Version = "jaeger-tracing"
+<br>
+<details>
+  <summary> <b> Imagem Jaeger </b> <i>(clique na setinha!)</i> </summary><br>
+  
+  ![tracing1](https://user-images.githubusercontent.com/13735095/233818051-c06edd9c-be7e-4657-8405-c96c8a462861.png) 
+  
+  ![tracing2](https://user-images.githubusercontent.com/13735095/233818062-bee79b21-0dff-42b9-a515-16949ef7a8ac.png)
+  
+  ![image](https://user-images.githubusercontent.com/13735095/233818070-a6b3f13c-a7a9-4902-b84b-b6a305242260.png)
 </details>
 

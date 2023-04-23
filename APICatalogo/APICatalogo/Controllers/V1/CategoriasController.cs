@@ -26,15 +26,16 @@ namespace APICatalogo.Controllers
             _uof = context;
             _mapper = mapper;
             _logger = logger;
-        }     
-
+        }
+        
         [HttpGet("categoriaComProduto"), MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetCategoriasComProdutos()
         {
             try
             {
                 _logger.LogInformation("\n======== Get => categorias/categoriaComProduto ========\n");
-                                
+
+                //return _uof.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
                 var categorias = await _uof.CategoriaRepository.GetProdutosPorCategoria();
                 
                 var categoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);

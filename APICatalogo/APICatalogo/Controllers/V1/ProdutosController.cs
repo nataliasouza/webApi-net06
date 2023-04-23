@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace APICatalogo.Controllers
 {
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [ApiVersion("1.0")]    
     [Route("v{v:apiVersion}/[controller]")]
     [ApiController]
@@ -29,6 +29,11 @@ namespace APICatalogo.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Obtém os produtos ordenados por preço na ordem ascendente
+        /// </summary>
+        /// <returns>Lista de objetos Produtos ordenados por preço</returns>
+        
         [HttpGet("menorpreco"), MapToApiVersion("1.0")]
         [ServiceFilter(typeof(LoggingFilter))]
         public async Task<ActionResult<IEnumerable<ProdutoDTO>>> GetProdutosPrecos()
@@ -48,6 +53,12 @@ namespace APICatalogo.Controllers
                 throw new Exception("Ocorreu um erro ao buscar a lista de produto ordenada com o menor preço.");
             }
         }
+
+        /// <summary>
+        /// Exibe uma relação dos produtos
+        /// </summary>
+        /// <returns>Retorna uma lista de objetos Produto</returns>
+        // api/produtos
 
         [HttpGet, MapToApiVersion("1.0")]
         [ServiceFilter(typeof(LoggingFilter))]       
@@ -88,6 +99,13 @@ namespace APICatalogo.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtem um produto pelo seu identificador produtoId
+        /// </summary>
+        /// <param name="id">Código do produto</param>
+        /// <returns>Um objeto Produto</returns>
+        // api/produtos/1
+
         [ServiceFilter(typeof(LoggingFilter))]
         [HttpGet("{id:int:min(1)}", Name ="ObterProduto"), MapToApiVersion("1.0")]       
         public async Task<ActionResult<ProdutoDTO>> GetProduto(int id)
@@ -115,6 +133,13 @@ namespace APICatalogo.Controllers
                 throw new Exception("Ocorreu um erro ao buscar o produto pelo seu identificador.");
             }
         }
+
+
+        /// <summary>
+        /// Inclui um novo produto
+        /// </summary>
+        /// <param name="produtoDto">objeto Produto</param>
+        /// <returns>O objeto Produto incluído</returns>
 
         [ServiceFilter(typeof(LoggingFilter)), MapToApiVersion("1.0")]
         [HttpPost, MapToApiVersion("1.0")]
@@ -147,6 +172,13 @@ namespace APICatalogo.Controllers
             }
         }
 
+        /// <summary>
+        /// Atualiza um produto pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="produtoDto"></param>
+        /// <returns></returns>
+
         [ServiceFilter(typeof(LoggingFilter))]
         [HttpPut("{id:int}"), MapToApiVersion("1.0")]
         public async Task<ActionResult> AtualizaProduto(int id, ProdutoDTO produtoDto)
@@ -174,7 +206,12 @@ namespace APICatalogo.Controllers
                 throw new Exception("Ocorreu um erro ao tratar a sua solicitação.");
             }
         }
-
+        /// <summary>
+        /// Deleta um produto pelo id
+        /// </summary>
+        /// <param name="id"></param>        
+        /// <returns></returns>
+        /// 
         [ServiceFilter(typeof(LoggingFilter))]
         [HttpDelete ("{id:int}"), MapToApiVersion("1.0")]
         public async Task<ActionResult<ProdutoDTO>> DeletaProduto(int id)
