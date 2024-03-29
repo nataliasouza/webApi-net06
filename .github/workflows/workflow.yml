@@ -24,15 +24,27 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      - name: Setup .NET
+      - name: Setup dotnet
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.0.x
-      - name: run install, build and test
-        run: dotnet install
-      - name: Restore dependencies
+          dotnet-version: ${{ matrix.dotnet-version }}
+      - uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          # Look to see if there is a cache hit for the corresponding requirements file
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+      - name: Install dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore
-      - name: Test
-        run: dotnet test --no-build --verbosity normal          
+        run: dotnet build 
+      - name: Test with dotnet 
+        run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"  
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: dotnet-results-${{ matrix.dotnet-version }}
+          path: TestResults-${{ matrix.dotnet-version }}
+          # Use always() to always run this step to publish test results when there are test failures
+          if: ${{ always() }}
