@@ -34,18 +34,17 @@ namespace APICatalogo.Controllers
             try
             {
                 _logger.LogInformation("\n======== Get => categorias/categoriaComProduto ========\n");
-
-                //return _uof.Categorias.AsNoTracking().Include(c=> c.Produtos).ToList();
+                
                 var categorias = await _uof.CategoriaRepository.GetProdutosPorCategoria();
                 
                 var categoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
 
                 return categoriasDTO;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Get => categorias/categoriaComProduto - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao buscar as categorias com produtos.");
+                _logger.LogError(ex, "Ocorreu um erro ao buscar as categorias com produtos.");
+                return StatusCode(500, "Ocorreu um erro ao buscar as categorias com produtos. Por favor, tente novamente mais tarde.");
             }
         }
 
@@ -72,16 +71,17 @@ namespace APICatalogo.Controllers
 
                 var categoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
 
-                if (categorias is null)
+                if (!categorias.Any())
                 {
+                    _logger.LogInformation("Nenhuma categoria foi encontrada.");
                     return NotFound("As categorias não foram encontradas");
                 }
                 return categoriasDTO;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Get => categorias - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao buscar as categorias.");
+                _logger.LogError(ex, "Ocorreu um erro ao buscar as categorias.");
+                return StatusCode(500, "Ocorreu um erro ao buscar as categorias. Por favor, tente novamente mais tarde.");
             }
         }
 
@@ -94,20 +94,22 @@ namespace APICatalogo.Controllers
                 _logger.LogInformation(messagem);
 
                 var categoria = await _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
-                
+
                 if (categoria is null)
                 {
-                    _logger.LogInformation($"\n======== Get => categorias/id = {id} - IS NULL ========\n");
-                    return NotFound("Categoria não encontrada");                    
+                    string mensagem = string.Format("\n======== Get => categorias/id = {0} - IS NULL ========\n", id);
+                    _logger.LogInformation(mensagem);
+                    return NotFound("Categoria não encontrada");
                 }
 
                 var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
                 return categoriaDTO;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation($"\n======== Get => categorias/id = {id} - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao buscar a categoria pelo seu identificador.");
+                string errorMessage = string.Format("Ocorreu um erro ao buscar a categoria pelo identificador {0}.", id);
+                _logger.LogError(ex, errorMessage);
+                return StatusCode(500, "Ocorreu um erro ao buscar a categoria. Por favor, tente novamente mais tarde.");
             }
         }
 
@@ -134,10 +136,10 @@ namespace APICatalogo.Controllers
                 return new CreatedAtRouteResult("ObterCategoria",
                     new { id = categoria.CategoriaId }, categoriaDTO);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Post => categorias - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao salvar a categoria.");
+                _logger.LogError(ex, "\n======== Post => categorias - EXCEPTION ========\n");
+                throw new InvalidOperationException("Ocorreu um erro ao salvar a categoria.");
             }
         }
 
@@ -148,7 +150,7 @@ namespace APICatalogo.Controllers
             {
                 if (id != categoriaDto.CategoriaId)
                 {
-                    _logger.LogInformation($"\n======== Put => categorias/id = {id} ======== - BAD REQUEST\n");
+                    _logger.LogInformation("\n======== Put => categorias/id = {Id} ======== - BAD REQUEST\n", id);
                     return BadRequest();
                 }
 
@@ -161,10 +163,10 @@ namespace APICatalogo.Controllers
 
                 return Ok($"Nome do produto atualizado: {categoria.Nome}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Put => categorias ======== - EXCEPTION\n");
-                throw new Exception("Ocorreu um erro ao atualizar a categoria.");
+                _logger.LogError(ex, "\n======== Put => categorias ======== - EXCEPTION\n");
+                throw new InvalidOperationException("Ocorreu um erro ao atualizar a categoria.");
             }
         }
 
@@ -173,13 +175,13 @@ namespace APICatalogo.Controllers
         {
             try
             {
-                _logger.LogInformation($"\n======== Delete => categorias/id = {id} ========\n");
+                _logger.LogInformation("\n======== Delete => categorias/id = {Id} ========\n", id);
 
                 var categoria = await _uof.CategoriaRepository.GetById(c => c.CategoriaId == id);
 
                 if (categoria is null)
                 {
-                    _logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - IS NULL\n");
+                    _logger.LogInformation("\n======== Delete => categorias/id = {Id} ======== - IS NULL\n", id);
                     return NotFound("Categoria não localizado...");
                 }
 
@@ -190,10 +192,10 @@ namespace APICatalogo.Controllers
 
                 return Ok($"A categoria deletada: {categoriaDto.Nome}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - EXCEPTION\n");
-                throw new Exception("Ocorreu um erro ao tratar a sua solicitação.");
+                _logger.LogError(ex, "\n======== Delete => categorias/id = {Id} ======== - EXCEPTION\n", id);
+                throw new InvalidOperationException("Ocorreu um erro ao tratar a sua solicitação.");
             }
         }
     }

@@ -2,7 +2,7 @@
 {
     public class CustomerLogger : ILogger
     {
-        readonly string loggerNome;
+        public readonly string loggerNome;
         readonly CustomLoggerProviderConfiguration loggerConfig;
 
         public CustomerLogger(string name, CustomLoggerProviderConfiguration config)
@@ -31,17 +31,15 @@
         private void EscreverAquivoLog(string mensagem)
         {
             string enderecoArquivoLog = @"C:\Users\natal\Desktop\LOGS\Registro_Log.txt";
-            using (StreamWriter sw = new StreamWriter(enderecoArquivoLog, true))
+
+            try
             {
-                try
-                {
-                    sw.WriteLine(mensagem);
-                    sw.Close();
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                File.AppendAllText(enderecoArquivoLog, mensagem + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText(enderecoArquivoLog, $"Erro ao escrever no arquivo de log: {ex}" + Environment.NewLine);
+                throw;
             }
         }
     }
