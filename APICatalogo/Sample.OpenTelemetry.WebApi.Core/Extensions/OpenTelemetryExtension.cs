@@ -71,7 +71,7 @@ namespace Sample.OpenTelemetry.WebApi.Core.Extensions
 				});
 			});
 
-			builder.Services.Configure<AspNetCoreInstrumentationOptions>(options => options.RecordException = true);
+			//builder.Services.Configure<AspNetCoreInstrumentationOptions>(options => options.RecordException = true);
 			builder.Services.Configure<OpenTelemetryLoggerOptions>(opt =>
 			{
 				opt.IncludeScopes = true;
