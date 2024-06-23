@@ -1,25 +1,3 @@
-using APICatalogo;
-using APICatalogo.Data;
-using APICatalogo.DTOs.Mappings;
-using APICatalogo.Extensions;
-using APICatalogo.Filters;
-using APICatalogo.Logging;
-using APICatalogo.Repository;
-using APICatalogo.Repository.interfaces;
-using AutoMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Text;
-using System.Text.Json.Serialization;
-using Sample.OpenTelemetry.WebApi.Core.Configurations;
-using Sample.OpenTelemetry.WebApi.Core.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 

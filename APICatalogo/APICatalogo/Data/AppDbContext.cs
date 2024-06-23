@@ -1,8 +1,4 @@
-﻿using APICatalogo.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
-namespace APICatalogo.Data
+﻿namespace APICatalogo.Data
 {
     public class AppDbContext : IdentityDbContext
     {

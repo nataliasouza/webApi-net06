@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace APICatalogo.DTOs
+﻿namespace APICatalogo.DTOs
 {
     public class UsuarioDTO
     {
@@ -9,12 +7,12 @@ namespace APICatalogo.DTOs
         public string? Email { get; set; }
 
         [Required(ErrorMessage = "Informe o sua senha")]
-        [DataType(DataType.Password)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
         [Display(Name = "Informe a Senha")]
         [StringLength(10, MinimumLength = 4)]
         public string? Password { get; set; }
 
-        [DataType(DataType.Password)]
+        [DataType(System.ComponentModel.DataAnnotations.DataType.Password)]
         [Display(Name = "Confirme sua senha")]
         [Compare("Password", ErrorMessage = "A senha digitada não confere")]
         public string? ConfirmPassword { get; set; }

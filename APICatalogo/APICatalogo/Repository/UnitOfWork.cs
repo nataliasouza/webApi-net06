@@ -1,7 +1,4 @@
-﻿using APICatalogo.Data;
-using APICatalogo.Repository.interfaces;
-
-namespace APICatalogo.Repository
+﻿namespace APICatalogo.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {

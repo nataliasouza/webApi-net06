@@ -1,7 +1,4 @@
-﻿using APICatalogo.Models;
-using AutoMapper;
-
-namespace APICatalogo.DTOs.Mappings
+﻿namespace APICatalogo.DTOs.Mappings
 {
     public class MappingProfile : Profile
     {

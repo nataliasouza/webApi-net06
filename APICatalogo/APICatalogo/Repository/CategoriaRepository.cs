@@ -1,10 +1,4 @@
-﻿using APICatalogo.Data;
-using APICatalogo.Models;
-using APICatalogo.Pagination;
-using APICatalogo.Repository.interfaces;
-using Microsoft.EntityFrameworkCore;
-
-namespace APICatalogo.Repository
+﻿namespace APICatalogo.Repository
 {
     public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
     {
