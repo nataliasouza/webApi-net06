@@ -140,8 +140,8 @@ https://github.com/hgmauri/sample-opentelemetry
 ##### Branch = testesUnitarios
 
 - [x] Incluir os Testes Unitários - XUnit. :construction:[Em construção]:construction:
-- [ ] Utilizar MOQ - Bancos de Dados.
-- [ ] Utilizar MOQ - Refatorar CategoriasControllerTestesUnitarios.
+- [x] Utilizar MOQ.
+- [x] Refatorar CategoriasControllerTestesUnitarios e criar novos testes.
 - [ ] Utilizar MOQ - Criar Testes Unitários de ProdutosControllerTestesUnitarios.
 
 ##### Branch = consumindoAPI
