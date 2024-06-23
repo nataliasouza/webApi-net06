@@ -10,7 +10,11 @@ namespace Sample.OpenTelemetry.WebApi.Core.Extensions
 		{
 			base.OnEnd(data);
 			var currentActivity = Activity.Current;
-			currentActivity?.AddEvent(new ActivityEvent(data?.State?.ToString() ?? string.Empty));
-		}
+            var attributesAsString = data?.Attributes?
+				.Select(kv => $"{kv.Key}: {kv.Value}")
+				.Aggregate((current, next) => $"{current}, {next}") ?? string.Empty;
+
+            currentActivity?.AddEvent(new ActivityEvent(attributesAsString));
+        }
 	}
 }
