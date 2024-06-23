@@ -108,7 +108,7 @@ namespace APICatalogo.Controllers
                 }
 
                 var categoriaDTO = _mapper.Map<CategoriaDTO>(categoria);
-                return categoriaDTO;
+                return Ok(categoriaDTO);
             }
             catch (Exception ex)
             {

@@ -194,12 +194,12 @@ namespace ApiCatalogoTestesUnitarios
             _mockMapper.Setup(m => m.Map<List<CategoriaDTO>>(It.IsAny<List<Categoria>>())).Returns(categoriasDTO);
 
             var mockHttpContext = new Mock<HttpContext>();
-            var response = new DefaultHttpContext().Response; // Cria um objeto Response padrão
-            mockHttpContext.Setup(_ => _.Response).Returns(response); // Configura o mock do HttpContext para retornar o objeto Response
+            var response = new DefaultHttpContext().Response; 
+            mockHttpContext.Setup(_ => _.Response).Returns(response); 
 
             _controller.ControllerContext = new ControllerContext()
             {
-                HttpContext = mockHttpContext.Object // Define o HttpContext do controller para o mock
+                HttpContext = mockHttpContext.Object 
             };
 
             // Act
@@ -258,7 +258,51 @@ namespace ApiCatalogoTestesUnitarios
         }
 
         [Fact]
-        public async Task GetCategoria_ReturnsNotFound_QuandoCategoriaNaoExiste()
+        public async Task GetCategoriaById_RetornaOk_ComCategoriaEspecifica()
+        {
+            // Arrange
+            var categoriaEsperada = new Categoria { CategoriaId = 1, Nome = "Categoria Teste" };
+            var categoriaDtoEsperada = new CategoriaDTO { CategoriaId = 1, Nome = "Categoria Teste" };
+
+            _mockUnitOfWork.Setup(repo => repo.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>()))
+                .ReturnsAsync(categoriaEsperada);
+
+            _mockMapper.Setup(mapper => mapper.Map<CategoriaDTO>(categoriaEsperada))
+                .Returns(categoriaDtoEsperada);
+
+            // Act           
+            var actionResult = await _controller.GetCategoriaById(1);
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(actionResult.Result);
+            Assert.NotNull(okResult);
+
+            var categoriaDto = Assert.IsType<CategoriaDTO>(okResult.Value); 
+            Assert.NotNull(categoriaDto);
+            Assert.Equal(categoriaEsperada.CategoriaId, categoriaDto.CategoriaId);
+            Assert.Equal(categoriaEsperada.Nome, categoriaDto.Nome);
+            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+        }
+
+        [Fact]
+        public async Task GetCategoriaById_RetornaStatusCode500_QuandoOcorreExcecao()
+        {
+            // Arrange
+            var categoriaId = 1;
+            _mockUnitOfWork.Setup(repo => repo.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>()))
+                .ThrowsAsync(new Exception("Erro simulado ao acessar o banco de dados"));
+
+            // Act
+            var result = await _controller.GetCategoriaById(categoriaId);
+
+            // Assert
+            var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(StatusCodes.Status500InternalServerError, statusCodeResult.StatusCode);
+            Assert.Equal("Ocorreu um erro ao buscar a categoria. Por favor, tente novamente mais tarde.", statusCodeResult.Value);
+        }
+
+        [Fact]
+        public async Task GetCategoriaById_ReturnsNotFound_QuandoCategoriaNaoExiste()
         {
             // Arrange
             _mockUnitOfWork.Setup(u => u.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>())).ReturnsAsync(() => null);
@@ -268,23 +312,7 @@ namespace ApiCatalogoTestesUnitarios
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(result.Result);
-        }
-
-        [Fact]
-        public async Task AddCategoria_RetornaBadRequest_QuandoNomeNaoInformado()
-        {
-            // Arrange
-            var categoriaDtoSemNome = new CategoriaDTO { CategoriaId = 1, Nome = "", ImagemUrl = "url_da_imagem.png" };
-            _mockMapper.Setup(m => m.Map<Categoria>(categoriaDtoSemNome)).Returns(new Categoria { CategoriaId = 1, Nome = "", ImagemUrl = "url_da_imagem.png" });
-
-            // Act
-            var result = await _controller.GetCategoriasComProdutos();
-
-            // Assert
-            var objectResult = Assert.IsType<ObjectResult>(result.Result);
-            Assert.Equal(500, objectResult.StatusCode);
-            Assert.Equal("Ocorreu um erro ao buscar as categorias com produtos. Por favor, tente novamente mais tarde.", objectResult.Value);
-        }
+        }        
 
         [Fact]
         public async Task AddCategoria_CategoriaValida_ReturnsCreatedAtRouteResult()
@@ -311,6 +339,22 @@ namespace ApiCatalogoTestesUnitarios
         }
 
         [Fact]
+        public async Task AddCategoria_RetornaBadRequest_QuandoNomeNaoInformado()
+        {
+            // Arrange
+            var categoriaDtoSemNome = new CategoriaDTO { CategoriaId = 1, Nome = "", ImagemUrl = "url_da_imagem.png" };
+            _mockMapper.Setup(m => m.Map<Categoria>(categoriaDtoSemNome)).Returns(new Categoria { CategoriaId = 1, Nome = "", ImagemUrl = "url_da_imagem.png" });
+
+            // Act
+            var result = await _controller.GetCategoriasComProdutos();
+
+            // Assert
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500, objectResult.StatusCode);
+            Assert.Equal("Ocorreu um erro ao buscar as categorias com produtos. Por favor, tente novamente mais tarde.", objectResult.Value);
+        }
+
+        [Fact]
         public async Task AddCategoria_RetornaBadRequest_QuandoCategoriaEhNula()
         {
             // Act
@@ -333,24 +377,108 @@ namespace ApiCatalogoTestesUnitarios
             Assert.Equal("Ocorreu um erro ao salvar a categoria.", exception.Message);
         }
 
-        //[Fact]
-        //public async Task AddCategoria_RetornaBadRequest_QuandoNomeCategoriaJaExiste()
-        //{
-        //    // Arrange
-        //    var categoriaDto = new CategoriaDTO { CategoriaId = 1, Nome = "Bebidas", ImagemUrl = "url_da_imagem.png" };
-        //    _mockMapper.Setup(m => m.Map<Categoria>(categoriaDto)).Returns(new Categoria { CategoriaId = 1, Nome = "Bebidas", ImagemUrl = "url_da_imagem.png" });
+        [Fact]
+        public async Task AtualizaCategoria_RetornaOk_QuandoAtualizacaoBemSucedida()
+        {
+            // Arrange
+            var categoriaDto = new CategoriaDTO { CategoriaId = 1, Nome = "Categoria Atualizada" };
+            var categoria = new Categoria { CategoriaId = 1, Nome = "Categoria Original" };
 
-        //    _mockUnitOfWork.Setup(u => u.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>())).ReturnsAsync(new Categoria { CategoriaId = 1, Nome = "Bebidas", ImagemUrl = "url_da_imagem.png" });
+            _mockMapper.Setup(m => m.Map<Categoria>(categoriaDto)).Returns(categoria);
+            _mockUnitOfWork.Setup(u => u.CategoriaRepository.Update(categoria));           
+            _mockUnitOfWork.Setup(u => u.Commit()).Returns(Task.CompletedTask);
 
-        //    // Act
-        //    var result = await _controller.AddCategoria(categoriaDto);
+            // Act
+            var result = await _controller.AtualizaCategoria(categoriaDto.CategoriaId, categoriaDto);
 
-        //    // Assert
-        //    var objectResult = Assert.IsType<ObjectResult>(result);
-        //    Assert.Equal(500, objectResult.StatusCode);
-        //    Assert.Equal("Ocorreu um erro ao buscar as categorias com produtos. Por favor, tente novamente mais tarde.", objectResult.Value);
-        //}
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);
+            Assert.Equal("Nome do produto atualizado: Categoria Original", okResult.Value);
+            Assert.Equal("Categoria Atualizada", categoriaDto.Nome);
+            Assert.True(categoriaDto.CategoriaId == 1);
+            Assert.Equal(StatusCodes.Status200OK, okResult.StatusCode);  
+        }
 
+        [Fact]
+        public async Task AtualizaCategoria_RetornaBadRequest_QuandoIdDiferenteNoDto()
+        {
+            // Arrange
+            var categoriaDto = new CategoriaDTO { CategoriaId = 2 };
 
+            // Act
+            var result = await _controller.AtualizaCategoria(1, categoriaDto);
+
+            // Assert
+            Assert.IsType<BadRequestResult>(result);
+        }
+
+        [Fact]
+        public async Task AtualizaCategoria_RetornaStatusCode500_QuandoOcorreExcecao()
+        {
+            // Arrange
+            var categoriaDto = new CategoriaDTO { CategoriaId = 1 };
+            var categoria = new Categoria { CategoriaId = 1 };
+
+            _mockMapper.Setup(m => m.Map<Categoria>(categoriaDto)).Returns(categoria);
+            _mockUnitOfWork.Setup(u => u.CategoriaRepository.Update(categoria));
+            _mockUnitOfWork.Setup(u => u.Commit()).ThrowsAsync(new Exception("Erro simulado"));
+
+            // Act
+            Func<Task> act = async () => await _controller.AtualizaCategoria(categoriaDto.CategoriaId, categoriaDto);
+
+            // Assert
+            var exception = await Assert.ThrowsAsync<InvalidOperationException>(act);
+            Assert.Equal("Ocorreu um erro ao atualizar a categoria.", exception.Message);
+        }
+
+        [Fact]
+        public async Task DeletaCategoria_RetornaOk_QuandoCategoriaDeletadaComSucesso()
+        {
+            // Arrange
+            var categoria = new Categoria { CategoriaId = 1, Nome = "Categoria Teste" };
+            _mockUnitOfWork.Setup(u => u.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>()))
+                .ReturnsAsync(categoria);
+            _mockMapper.Setup(m => m.Map<CategoriaDTO>(categoria)).Returns(new CategoriaDTO { CategoriaId = 1, Nome = "Categoria Teste" });
+
+            // Act
+            var result = await _controller.DeletaCategoria(1);
+
+            // Assert
+            result.Result.Should().BeOfType<OkObjectResult>();
+            (result.Result as OkObjectResult).Value.Should().Be($"A categoria deletada: {categoria.Nome}");
+            Assert.Equal(StatusCodes.Status200OK, (result.Result as OkObjectResult).StatusCode);                
+        }
+
+        [Fact]
+        public async Task DeletaCategoria_RetornaNotFound_QuandoCategoriaNaoExiste()
+        {
+            // Arrange
+            _mockUnitOfWork.Setup(u => u.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>()))
+                .ReturnsAsync((Categoria)null);
+
+            // Act
+            var result = await _controller.DeletaCategoria(1);
+
+            // Assert
+            result.Result.Should().BeOfType<NotFoundObjectResult>();
+            (result.Result as NotFoundObjectResult).Value.Should().Be("Categoria não localizado...");
+            Assert.Equal(StatusCodes.Status404NotFound, (result.Result as NotFoundObjectResult).StatusCode);
+        }
+
+        [Fact]
+        public async Task DeletaCategoria_LancaInvalidOperationException_QuandoOcorreExcecao()
+        {
+            // Arrange
+            _mockUnitOfWork.Setup(u => u.CategoriaRepository.GetById(It.IsAny<Expression<Func<Categoria, bool>>>()))
+                .ThrowsAsync(new Exception("Erro simulado ao acessar o banco de dados"));
+
+            // Act
+            Func<Task> act = async () => await _controller.DeletaCategoria(1);
+
+            // Assert
+            await act.Should().ThrowAsync<InvalidOperationException>()
+                .WithMessage("Ocorreu um erro ao tratar a sua solicitação.");
+        }
     }
 }
