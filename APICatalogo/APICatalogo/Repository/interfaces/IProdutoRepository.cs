@@ -1,7 +1,4 @@
-﻿using APICatalogo.Models;
-using APICatalogo.Pagination;
-
-namespace APICatalogo.Repository.interfaces
+﻿namespace APICatalogo.Repository.interfaces
 {
     public interface IProdutoRepository : IRepository<Produto>
     {

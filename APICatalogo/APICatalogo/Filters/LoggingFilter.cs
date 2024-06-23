@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-
-namespace APICatalogo.Filters
+﻿namespace APICatalogo.Filters
 {
     public class LoggingFilter : IActionFilter
     {

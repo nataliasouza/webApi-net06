@@ -1,14 +1,4 @@
-﻿using APICatalogo.DTOs;
-using APICatalogo.Filters;
-using APICatalogo.Models;
-using APICatalogo.Pagination;
-using APICatalogo.Repository.interfaces;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-namespace APICatalogo.Controllers
+﻿namespace APICatalogo.Controllers
 {
     //[Authorize(AuthenticationSchemes = "Bearer")]
     [ApiVersion("1.0")]    

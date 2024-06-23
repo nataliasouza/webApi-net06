@@ -1,12 +1,4 @@
-﻿using APICatalogo.DTOs;
-using APICatalogo.Filters;
-using APICatalogo.Pagination;
-using APICatalogo.Repository.interfaces;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-
-namespace APICatalogo.Controllers.V2
+﻿namespace APICatalogo.Controllers.V2
 {
     [ApiVersion("2.0")]    
     [Route("v{v:apiVersion}/produtos")]

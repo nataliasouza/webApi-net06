@@ -1,8 +1,4 @@
-﻿using APICatalogo.Models;
-using Microsoft.AspNetCore.Diagnostics;
-using System.Net;
-
-namespace APICatalogo.Extensions
+﻿namespace APICatalogo.Extensions
 {
     public static class ExceptionMiddlewareExtensions
     {

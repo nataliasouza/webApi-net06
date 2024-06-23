@@ -1,9 +1,4 @@
-﻿using APICatalogo.Data;
-using APICatalogo.Repository.interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
-
-namespace APICatalogo.Repository
+﻿namespace APICatalogo.Repository
 {
     public class Repository<T> : IRepository<T> where T : class
     {
