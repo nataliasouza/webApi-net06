@@ -1,21 +1,4 @@
-﻿using APICatalogo.Controllers;
-using APICatalogo.DTOs;
-using APICatalogo.Models;
-using APICatalogo.Pagination;
-using APICatalogo.Repository.interfaces;
-using AutoMapper;
-using FluentAssertions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Xunit;
-
+﻿
 namespace ApiCatalogoTestesUnitarios
 {
     public class CategoriasControllerTestesUnitarios

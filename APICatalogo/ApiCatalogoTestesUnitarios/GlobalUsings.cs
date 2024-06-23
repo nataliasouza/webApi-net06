@@ -1,0 +1,17 @@
+﻿global using Xunit;
+global using Moq;
+global using FluentAssertions;
+global using System.Threading.Tasks;
+global using APICatalogo.Controllers;
+global using APICatalogo.DTOs;
+global using APICatalogo.Models;
+global using APICatalogo.Pagination;
+global using APICatalogo.Repository.interfaces;
+global using AutoMapper;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Extensions.Logging;
+global using System;
+global using System.Collections.Generic;
+global using System.Linq;
+global using System.Linq.Expressions; 
