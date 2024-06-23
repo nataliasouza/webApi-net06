@@ -1,6 +1,6 @@
 # Web API ASP .NET Core Essencial (.NET 6) - Macoratti 
 <img src="https://img.shields.io/static/v1?label=MACORATTI&message=UDEMY&color=7159c1&style=for-the-badge"/>
-:spiral_calendar: Atualizado em 24 de Abril de 2023
+:spiral_calendar: Atualizado em 22 de Junho de 2024
 
 :construction: O projeto está em desenvolvimento :construction:
 
@@ -90,11 +90,7 @@ https://blog.christian-schou.dk/how-to-use-api-versioning-in-net-core-web-api/
 <details>
   <summary> <b> Detalhamento das atividades </b> <i>(clique na setinha!)</i> </summary><br>
 
-1.	Incluir um "Logger Real". [concluído]
-2. Incluir os Teste Unitários.
-3. Utilizar MOQ.
-
-:warning: *No curso não foi demonstrado como utilizar um "logger real" nos Testes Unitários* :warning:
+1. Incluir os Teste Unitários e utilizar o MOQ. [Em Andamento]
 
 <b>Links utilizados: </b> 
 ```bash
