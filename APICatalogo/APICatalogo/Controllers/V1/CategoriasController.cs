@@ -27,7 +27,7 @@ namespace APICatalogo.Controllers
             _mapper = mapper;
             _logger = logger;
         }
-        
+
         [HttpGet("categoriaComProduto"), MapToApiVersion("1.0")]
         public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetCategoriasComProdutos()
         {
@@ -35,27 +35,32 @@ namespace APICatalogo.Controllers
             {
                 _logger.LogInformation("\n======== Get => categorias/categoriaComProduto ========\n");
                 
-                var categorias = await _uof.CategoriaRepository.GetProdutosPorCategoria();
-                
-                var categoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);
+                var categorias = await _uof.CategoriaRepository.GetCategoriasComProdudosRepository();
 
-                return categoriasDTO;
+                if (categorias == null || !categorias.Any())
+                {
+                    _logger.LogInformation("Nenhuma categoria com produtos foi encontrada.");
+                    return NotFound("Nenhuma categoria com produtos foi encontrada.");
+                }
+                var categoriasDTO = _mapper.Map<List<CategoriaDTO>>(categorias);            
+                              
+                return Ok(categoriasDTO);
             }
             catch (Exception ex)
-            {
-                _logger.LogError(ex, "Ocorreu um erro ao buscar as categorias com produtos.");
+            {                
+                _logger.LogError(ex, "Ocorreu um erro ao buscar as categorias com produtos.");                
                 return StatusCode(500, "Ocorreu um erro ao buscar as categorias com produtos. Por favor, tente novamente mais tarde.");
             }
         }
 
         [HttpGet, MapToApiVersion("1.0")]
-        public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetTodasCategoria([FromQuery] CategoriasParameters categoriasParameters)
+        public async Task<ActionResult<IEnumerable<CategoriaDTO>>> GetTodasCategorias([FromQuery] CategoriasParameters categoriasParameters)
         {
             try
             {
                 _logger.LogInformation("\n======== Get => categorias ========\n");
 
-                var categorias = await _uof.CategoriaRepository.GetCategorias(categoriasParameters);
+                var categorias = await _uof.CategoriaRepository.GetTodasCategoriasRepository(categoriasParameters);
 
                 var metadata = new
                 {
@@ -74,9 +79,9 @@ namespace APICatalogo.Controllers
                 if (!categorias.Any())
                 {
                     _logger.LogInformation("Nenhuma categoria foi encontrada.");
-                    return NotFound("As categorias não foram encontradas");
+                    return NotFound("As categorias não foram encontradas. Por favor, tente novamente mais tarde.");
                 }
-                return categoriasDTO;
+                return Ok(categoriasDTO);
             }
             catch (Exception ex)
             {
@@ -86,7 +91,7 @@ namespace APICatalogo.Controllers
         }
 
         [HttpGet("{id:int:min(1)}", Name = "ObterCategoria"), MapToApiVersion("1.0")]
-        public async Task<ActionResult<CategoriaDTO>> GetCategoria(int id)
+        public async Task<ActionResult<CategoriaDTO>> GetCategoriaById(int id)
         {
             try
             {
