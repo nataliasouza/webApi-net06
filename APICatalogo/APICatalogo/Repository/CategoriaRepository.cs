@@ -6,11 +6,11 @@
         {
         }
 
-        public async Task<PagedList<Categoria>> GetTodasCategoriasRepository(CategoriasParameters categoriaParameters)
+        public async Task<PagedList<Categoria>> GetTodasCategoriasRepository(CategoriasParameters categoriasParameters)
         {
             return await PagedList<Categoria>.ToPagedList(GetAll().OrderBy(on => on.Nome),
-                               categoriaParameters.PageNumber,
-                               categoriaParameters.PageSize);
+                               categoriasParameters.PageNumber,
+                               categoriasParameters.PageSize);
         }
         public async Task<IEnumerable<Categoria>> GetCategoriasComProdudosRepository()
         {
