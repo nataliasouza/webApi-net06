@@ -1,11 +1,9 @@
-﻿using APICatalogo.Data;
-using APICatalogo.Models;
-
+﻿
 namespace ApiCatalogoTestesUnitarios
 {
-    public class DBUnitTestsMockInitializer
+    public class DbMockInitializerIntegrationTests
     {
-        public DBUnitTestsMockInitializer()
+        public DbMockInitializerIntegrationTests()
         {}
 
         public void Seed(AppDbContext context)
