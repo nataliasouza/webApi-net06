@@ -12,7 +12,7 @@
         private readonly ILogger _logger;
 
         public ProdutosController(IUnitOfWork context, IMapper mapper,
-            ILogger<CategoriasController> logger)
+            ILogger<ProdutosController> logger)
         {
             _uof = context;
             _mapper = mapper;
@@ -32,15 +32,15 @@
             {
                 _logger.LogInformation("\n======== Get => produtos/menorpreco ========\n");
 
-                var produtos = await _uof.ProdutoRepository.GetProdutosPorPreco();
+                var produtos = await _uof.ProdutoRepository.GetProdutosPorPreco(); 
                 var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);
 
-                return produtosDTO;
+                return Ok(produtosDTO);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Get => produtos/menorpreco - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao buscar a lista de produto ordenada com o menor preço.");
+                _logger.LogError(ex,"\n======== Get => produtos/menorpreco - EXCEPTION ========\n");
+                throw new InvalidOperationException("Ocorreu um erro ao buscar a lista de produto ordenada com o menor preço.");
             }
         }
 
@@ -72,20 +72,14 @@
 
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
-                var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);
+                var produtosDTO = _mapper.Map<List<ProdutoDTO>>(produtos);              
 
-                if (produtos is null)
-                {
-                    _logger.LogInformation("\n======== Get => produtos/ - IS NULL ========\n");
-                    return NotFound("Produtos não encontrados");
-                }
-
-                return produtosDTO;
+                return Ok(produtosDTO);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Get => produtos/ - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao buscar os produtos.");
+                _logger.LogInformation(ex,"\n======== Get => produtos/ - EXCEPTION ========\n");
+                throw new InvalidOperationException ("Ocorreu um erro ao buscar os produtos.");
             }
         }
 
@@ -108,19 +102,19 @@
 
                 var produto = await _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
                 
-                if (produto is null)
+                if (produto is null || produto.ProdutoId != id)
                 {
-                    _logger.LogInformation($"\n======== Get => produtos/id = {id} - IS NULL ========\n");
+                    _logger.LogInformation("\n======== Get => produtos/id = {Id} - É nulo ou não existe.\n", id);
                     return NotFound("Produto não encontrado");
                 }
 
                 var produtoDTO = _mapper.Map<ProdutoDTO>(produto);
-                return produtoDTO;
+                return Ok(produtoDTO);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation($"\n======== Get => produtos/id = {id} - EXCEPTION ========\n");
-                throw new Exception("Ocorreu um erro ao buscar o produto pelo seu identificador.");
+                _logger.LogInformation(ex,"\n======== Get => produtos/id = {Id} - EXCEPTION ========\n", id);
+                throw new InvalidOperationException("Ocorreu um erro ao buscar o produto pelo seu identificador.");
             }
         }
 
@@ -155,10 +149,10 @@
                 return new CreatedAtRouteResult("ObterProduto",
                     new { id = produto.ProdutoId }, produtoDTO);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation("\n======== Post => produtos ======== - EXCEPTION\n");
-                throw new Exception("Ocorreu um erro ao salvar o produto.");
+                _logger.LogInformation(ex,"\n======== Post => produtos ======== - EXCEPTION\n");
+                throw new InvalidOperationException("Ocorreu um erro ao salvar o produto.");
             }
         }
 
@@ -177,11 +171,11 @@
             {
                 if (id != produtoDto.ProdutoId)
                 {
-                    _logger.LogInformation($"\n======== Put => produtos/id = {id} ======== - BAD REQUEST\n");
+                    _logger.LogInformation("\n======== Put => produtos/id = {Id} ======== - BAD REQUEST\n", id);
                     return BadRequest();
                 }
 
-                _logger.LogInformation($"\n======== Put => produtos/id = {id} ======== \n");
+                _logger.LogInformation("\n======== Put => produtos/id = {Id} ======== \n", id);
 
                 var produto = _mapper.Map<Produto>(produtoDto) ;
 
@@ -190,10 +184,10 @@
 
                 return Ok($"Nome do produto atualizado: {produto.Nome}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation($"\n======== Put => produtos/id = {id} ======== - EXCEPTION\n");
-                throw new Exception("Ocorreu um erro ao tratar a sua solicitação.");
+                _logger.LogInformation(ex, "\n======== Put => produtos/id = {Id} ======== - EXCEPTION\n", id);
+                throw new InvalidOperationException("Ocorreu um erro ao tratar a sua solicitação.");
             }
         }
         /// <summary>
@@ -208,13 +202,13 @@
         {
             try
             {
-                _logger.LogInformation($"\n======== Delete => produtos/id {id} ========\n");
+                _logger.LogInformation("\n======== Delete => produtos/id {Id} ========\n", id);
 
                 var produto = await _uof.ProdutoRepository.GetById(p => p.ProdutoId == id);
 
-                if (produto is null)
+                if (produto is null || produto.ProdutoId != id)
                 {
-                    _logger.LogInformation($"\n======== Delete => produtos/id = {id} ======== - IS NULL\n");
+                    _logger.LogInformation("\n======== Delete => produtos/id = {Id} ======== - É nulo ou não existe.\n", id);
                     return NotFound("Produto não localizado...");
                 }
 
@@ -225,10 +219,10 @@
 
                 return Ok($"Nome do produto deletado: {produtoDto.Nome}");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogInformation($"\n======== Delete => categorias/id = {id} ======== - EXCEPTION\n");
-                throw new Exception("Ocorreu um erro ao deletar um produto.");
+                _logger.LogInformation(ex, "\n======== Delete => categorias/id = {Id} ======== - EXCEPTION\n", id);
+                throw new InvalidOperationException("Ocorreu um erro ao deletar um produto.");
             }
         }
     }
