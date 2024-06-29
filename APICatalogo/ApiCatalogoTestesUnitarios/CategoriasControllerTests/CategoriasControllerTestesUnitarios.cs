@@ -1,5 +1,5 @@
 ﻿
-namespace ApiCatalogoTestesUnitarios
+namespace ApiCatalogoTestesUnitarios.CategoriasControllertests
 {
     public class CategoriasControllerTestesUnitarios
     {
