@@ -118,7 +118,7 @@ namespace ApiCatalogoTestesUnitarios.RepositoryTests
         }
 
         [Fact]
-        public async Task Update_Entity_ShouldUpdateSuccessfully()
+        public async Task Update_Entity_QuandoAtualizacaoProdutoComSucesso()
         {
             // Arrange
             var options = new DbContextOptionsBuilder<AppDbContext>()
@@ -144,7 +144,7 @@ namespace ApiCatalogoTestesUnitarios.RepositoryTests
         }
 
         [Fact]
-        public void Delete_Entity_ShouldRemoveEntity()
+        public void Delete_Entity_QuandoEntidadeForDeletadaComSucesso()
         {
             // Arrange
             var mockSet = new Mock<DbSet<Produto>>();
