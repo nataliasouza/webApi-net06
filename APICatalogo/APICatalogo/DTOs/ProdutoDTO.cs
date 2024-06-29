@@ -6,10 +6,10 @@
 
         [Required]
         [StringLength(50, ErrorMessage = "O nome deve conter entre 5 e 50 caracteres - *Campo Obrigatório*", MinimumLength = 5)]
-        public string? Nome { get; set; }
+        public string Nome { get; set; }
         [Required]
         [StringLength(300, ErrorMessage = "A descrição deve conter entre {2} até {1} caracteres", MinimumLength = 5)]
-        public string? Descricao { get; set; }
+        public string Descricao { get; set; }
         [Required]
         [Column(TypeName = "decimal(10,2)")]
         [Range(1, 10000, ErrorMessage = "O preço deve estar entre {1} e {2}")]
