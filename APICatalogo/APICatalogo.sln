@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.OpenTelemetry.WebApi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B7A40CB2-7F8D-4DEC-B30B-9361F0C5936E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiCatalogoTestesUnitarios", "ApiCatalogoTestesUnitarios\ApiCatalogoTestesUnitarios.csproj", "{5BB9CFD5-8E6E-4DCF-9E83-BA6AF6A824A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestesUnitarios", "ApiCatalogoTestesUnitarios\TestesUnitarios.csproj", "{5BB9CFD5-8E6E-4DCF-9E83-BA6AF6A824A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestesIntegrados", "TestesIntegrados", "{18DEFF9D-2ABE-46C8-B5C6-DCE5E62AA977}"
 EndProject
