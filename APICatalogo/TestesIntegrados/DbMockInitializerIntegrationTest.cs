@@ -1,5 +1,5 @@
 ﻿
-namespace ApiCatalogoTestesUnitarios
+namespace TestesIntegrados
 {
     public class DbMockInitializerIntegrationTests
     {
