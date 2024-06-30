@@ -1,6 +1,6 @@
 # Web API ASP .NET Core Essencial (.NET 6) - Macoratti 
 <img src="https://img.shields.io/static/v1?label=MACORATTI&message=UDEMY&color=7159c1&style=for-the-badge"/>
-:spiral_calendar: Atualizado em 22 de Junho de 2024
+:spiral_calendar: Atualizado em 30 de Junho de 2024
 
 :construction: O projeto está em desenvolvimento :construction:
 
@@ -139,10 +139,17 @@ https://github.com/hgmauri/sample-opentelemetry
 
 ##### Branch = testesUnitarios
 
-- [x] Incluir os Testes Unitários - XUnit. :construction:[Em construção]:construction:
+- [x] Incluir os Testes Unitários - XUnit.
 - [x] Utilizar MOQ.
 - [x] Refatorar CategoriasControllerTestesUnitarios e criar novos testes.
-- [ ] Utilizar MOQ - Criar Testes Unitários de ProdutosControllerTestesUnitarios.
+- [x] Utilizar MOQ - Criar Testes Unitários de ProdutosController.
+- [x] Utilizar MOQ - Criar Testes Unitários de Repository.
+
+##### Branch = testesIntegrados
+
+- [x] Incluir os Testes Integrados - XUnit. :construction:[Em construção]:construction:
+- [x] Criar a class DbMockInitializerIntegrationTest com um método Seed para popular o banco de dados em memória com dados de teste.
+
 
 ##### Branch = consumindoAPI
 
