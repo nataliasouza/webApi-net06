@@ -1,6 +1,6 @@
 # Web API ASP .NET Core Essencial (.NET 6) - Macoratti 
 <img src="https://img.shields.io/static/v1?label=MACORATTI&message=UDEMY&color=7159c1&style=for-the-badge"/>
-:spiral_calendar: Atualizado em 30 de Junho de 2024
+:spiral_calendar: Atualizado em 05 de Julho de 2024
 
 :construction: O projeto está em desenvolvimento :construction:
 
@@ -150,6 +150,9 @@ https://github.com/hgmauri/sample-opentelemetry
 - [x] Incluir os Testes Integrados - XUnit. :construction:[Em construção]:construction:
 - [x] Criar a class DbMockInitializerIntegrationTest com um método Seed para popular o banco de dados em memória com dados de teste.
 
+##### Branch = testesBDD
+
+- [x] Incluir os Testes BDD - Specflow. :construction:[Em construção]:construction:
 
 ##### Branch = consumindoAPI
 
